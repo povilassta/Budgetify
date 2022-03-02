@@ -1,11 +1,11 @@
 import express from "express";
+import accountsRouter from "./routes/accounts.js";
 
 const app = express();
 
 app.use(express.json());
 
-app.listen(3000);
+//Routes
+app.use("/accounts", accountsRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
+app.listen(3000);
