@@ -81,27 +81,4 @@ accountsRouter.delete("/:id/expenses/:expenseId", (req, res) => {
   res.send(`This route deletes ${req.params.expenseId} expense`);
 });
 
-// CATEGORIES ---------------------------------------------
-// GET categories
-accountsRouter.get("/:id/categories", (req, res) => {
-  res.send(
-    `This route returns expense categories for an account with id: ${req.params.id}`
-  );
-});
-
-// POST category
-accountsRouter.post("/:id/categories", (req, res) => {
-  res.send(`This route creates a category for an account`);
-});
-
-// PATCH category
-accountsRouter.patch("/:id/categories/:categoryId", (req, res) => {
-  res.send(`This route updates category's details`);
-});
-
-// DELETE category
-accountsRouter.delete("/:id/categories/:categoryId", (req, res) => {
-  res.send(`This route removes category`);
-});
-
 export default accountsRouter;
