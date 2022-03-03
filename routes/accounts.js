@@ -1,6 +1,28 @@
 import express from "express";
 const accountsRouter = express.Router();
 
+// CATEGORIES ---------------------------------------------
+// GET categories
+accountsRouter.get("/categories", (req, res) => {
+  res.send(`This route returns expense categories`);
+});
+
+// POST category
+accountsRouter.post("/categories", (req, res) => {
+  res.send(`This route creates a category for an account`);
+});
+
+// PATCH category
+accountsRouter.patch("/categories/:categoryId", (req, res) => {
+  res.send(`This route updates category's details`);
+});
+
+// DELETE category
+accountsRouter.delete("/categories/:categoryId", (req, res) => {
+  res.send(`This route removes category`);
+});
+
+// ACCOUNTS -------------------------------------------------
 // GET user's accounts
 accountsRouter.get("", (req, res) => {
   res.send(`This route returns ${req.params.userId} user's accounts`);
@@ -8,7 +30,6 @@ accountsRouter.get("", (req, res) => {
 
 // GET user's account with an id
 accountsRouter.get("/:id", (req, res) => {
-  console.log(req.params);
   res.send(`This route returns user's account with id: ${req.params.id}`);
 });
 
@@ -79,29 +100,6 @@ accountsRouter.patch("/:id/expenses/:expenseId", (req, res) => {
 // DELETE expense
 accountsRouter.delete("/:id/expenses/:expenseId", (req, res) => {
   res.send(`This route deletes ${req.params.expenseId} expense`);
-});
-
-// CATEGORIES ---------------------------------------------
-// GET categories
-accountsRouter.get("/:id/categories", (req, res) => {
-  res.send(
-    `This route returns expense categories for an account with id: ${req.params.id}`
-  );
-});
-
-// POST category
-accountsRouter.post("/:id/categories", (req, res) => {
-  res.send(`This route creates a category for an account`);
-});
-
-// PATCH category
-accountsRouter.patch("/:id/categories/:categoryId", (req, res) => {
-  res.send(`This route updates category's details`);
-});
-
-// DELETE category
-accountsRouter.delete("/:id/categories/:categoryId", (req, res) => {
-  res.send(`This route removes category`);
 });
 
 export default accountsRouter;

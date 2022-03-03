@@ -199,7 +199,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/accounts/1/categories",
+									"raw": "http://localhost:3000/accounts/categories",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -207,7 +207,6 @@
 									"port": "3000",
 									"path": [
 										"accounts",
-										"1",
 										"categories"
 									]
 								}
@@ -220,7 +219,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/accounts/1/categories",
+									"raw": "http://localhost:3000/accounts/categories",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -228,7 +227,6 @@
 									"port": "3000",
 									"path": [
 										"accounts",
-										"1",
 										"categories"
 									]
 								}
@@ -241,7 +239,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/accounts/1/categories/1",
+									"raw": "http://localhost:3000/accounts/categories/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -249,7 +247,6 @@
 									"port": "3000",
 									"path": [
 										"accounts",
-										"1",
 										"categories",
 										"1"
 									]
@@ -263,7 +260,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/accounts/1/categories/1",
+									"raw": "http://localhost:3000/accounts/categories/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -271,7 +268,6 @@
 									"port": "3000",
 									"path": [
 										"accounts",
-										"1",
 										"categories",
 										"1"
 									]
