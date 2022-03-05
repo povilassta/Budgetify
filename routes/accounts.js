@@ -1,36 +1,18 @@
 import express from "express";
+import incomesRouter from "./incomes.js";
+import expensesRouter from "./expenses.js";
 const accountsRouter = express.Router();
 
-// CATEGORIES ---------------------------------------------
-// GET categories
-accountsRouter.get("/categories", (req, res) => {
-  res.send(`This route returns expense categories`);
-});
-
-// POST category
-accountsRouter.post("/categories", (req, res) => {
-  res.send(`This route creates a category for an account`);
-});
-
-// PATCH category
-accountsRouter.patch("/categories/:categoryId", (req, res) => {
-  res.send(`This route updates category's details`);
-});
-
-// DELETE category
-accountsRouter.delete("/categories/:categoryId", (req, res) => {
-  res.send(`This route removes category`);
-});
-
-// ACCOUNTS -------------------------------------------------
 // GET user's accounts
-accountsRouter.get("", (req, res) => {
+accountsRouter.get("/", (req, res) => {
   res.send(`This route returns ${req.params.userId} user's accounts`);
 });
 
 // GET user's account with an id
-accountsRouter.get("/:id", (req, res) => {
-  res.send(`This route returns user's account with id: ${req.params.id}`);
+accountsRouter.get("/:accountId", (req, res) => {
+  res.send(
+    `This route returns user's account with id: ${req.params.accountId}`
+  );
 });
 
 // POST user's account
@@ -39,67 +21,34 @@ accountsRouter.post("/", (req, res) => {
 });
 
 // PATCH user's account
-accountsRouter.patch("/:id", (req, res) => {
+accountsRouter.patch("/:accountId", (req, res) => {
   res.send(`This route updates provided fields of user's account`);
 });
 
 // DELETE user's account
-accountsRouter.delete("/:id", (req, res) => {
-  res.send(`This route deletes user's account with id: ${req.params.id}`);
-});
-
-// INCOMES ----------------------------------------------
-// GET incomes
-accountsRouter.get("/:id/incomes", (req, res) => {
+accountsRouter.delete("/:accountId", (req, res) => {
   res.send(
-    `This route returns incomes for an account with id: ${req.params.id}`
+    `This route deletes user's account with id: ${req.params.accountId}`
   );
 });
 
-// POST income
-accountsRouter.post("/:id/incomes", (req, res) => {
-  res.send(
-    `This route creates a new income for an account with id: ${req.params.id}`
-  );
-});
+// The fix for our parameters problem
+accountsRouter.use(
+  "/:accountId/incomes",
+  function (req, res, next) {
+    req.accountId = req.params.accountId;
+    next();
+  },
+  incomesRouter
+);
 
-// PATCH income
-accountsRouter.patch("/:id/incomes/:incomeId", (req, res) => {
-  res.send(
-    `This route updates ${req.params.incomeId} income's provided details`
-  );
-});
-
-// DELETE income
-accountsRouter.delete("/:id/incomes/:incomeId", (req, res) => {
-  res.send(`This route deletes ${req.params.incomeId} income`);
-});
-
-// EXPENSES ----------------------------------------------
-// GET expenses
-accountsRouter.get("/:id/expenses", (req, res) => {
-  res.send(
-    `This route returns expenses for an account with id: ${req.params.id}`
-  );
-});
-
-// POST expense
-accountsRouter.post("/:id/expenses", (req, res) => {
-  res.send(
-    `This route creates a new expense for an account with id: ${req.params.id}`
-  );
-});
-
-// PATCH expense
-accountsRouter.patch("/:id/expenses/:expenseId", (req, res) => {
-  res.send(
-    `This route updates ${req.params.expenseId} expense's provided details`
-  );
-});
-
-// DELETE expense
-accountsRouter.delete("/:id/expenses/:expenseId", (req, res) => {
-  res.send(`This route deletes ${req.params.expenseId} expense`);
-});
+accountsRouter.use(
+  "/:accountId/expenses",
+  function (req, res, next) {
+    req.accountId = req.params.accountId;
+    next();
+  },
+  expensesRouter
+);
 
 export default accountsRouter;
