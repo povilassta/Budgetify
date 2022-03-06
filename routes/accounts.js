@@ -1,6 +1,7 @@
 import express from "express";
 import incomesRouter from "./incomes.js";
 import expensesRouter from "./expenses.js";
+import accountsService from "../services/accounts.js";
 const accountsRouter = express.Router();
 
 // GET user's accounts
@@ -36,7 +37,7 @@ accountsRouter.delete("/:accountId", (req, res) => {
 accountsRouter.use(
   "/:accountId/incomes",
   function (req, res, next) {
-    req.accountId = req.params.accountId;
+    accountsService.addAccountIdParam(req);
     next();
   },
   incomesRouter
@@ -45,7 +46,7 @@ accountsRouter.use(
 accountsRouter.use(
   "/:accountId/expenses",
   function (req, res, next) {
-    req.accountId = req.params.accountId;
+    accountsService.addAccountIdParam(req);
     next();
   },
   expensesRouter
