@@ -1,24 +1,25 @@
 import express from "express";
+import { authJwt } from "../services/auth.js";
 const categoriesRouter = express.Router();
 
 // CATEGORIES ---------------------------------------------
 // GET categories
-categoriesRouter.get("/", (req, res) => {
+categoriesRouter.get("/", authJwt, (req, res) => {
   res.send(`This route returns expense categories`);
 });
 
 // POST category
-categoriesRouter.post("/", (req, res) => {
+categoriesRouter.post("/", authJwt, (req, res) => {
   res.send(`This route creates a category`);
 });
 
 // PATCH category
-categoriesRouter.patch("/:id", (req, res) => {
+categoriesRouter.patch("/:id", authJwt, (req, res) => {
   res.send(`This route updates category's details`);
 });
 
 // DELETE category
-categoriesRouter.delete("/:id", (req, res) => {
+categoriesRouter.delete("/:id", authJwt, (req, res) => {
   res.send(`This route removes category`);
 });
 

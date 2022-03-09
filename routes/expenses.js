@@ -1,29 +1,30 @@
 import express from "express";
+import { authJwt } from "../services/auth.js";
 const expensesRouter = express.Router();
 
 // GET expenses
-expensesRouter.get("/", (req, res) => {
+expensesRouter.get("/", authJwt, (req, res) => {
   res.send(
     `This route returns expenses for an account with id: ${req.accountId}`
   );
 });
 
 // POST expense
-expensesRouter.post("/", (req, res) => {
+expensesRouter.post("/", authJwt, (req, res) => {
   res.send(
     `This route creates a new expense for an account with id: ${req.accountId}`
   );
 });
 
 // PATCH expense
-expensesRouter.patch("/:expenseId", (req, res) => {
+expensesRouter.patch("/:expenseId", authJwt, (req, res) => {
   res.send(
     `This route updates ${req.params.expenseId} expense's provided details`
   );
 });
 
 // DELETE expense
-expensesRouter.delete("/:expenseId", (req, res) => {
+expensesRouter.delete("/:expenseId", authJwt, (req, res) => {
   res.send(`This route deletes ${req.params.expenseId} expense`);
 });
 
