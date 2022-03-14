@@ -13,10 +13,7 @@ const opts = {
 
 const jwtStrategy = new JwtStrategy(opts, async (payload, done) => {
   const user = db.getUserByEmail(payload.email);
-  if (user) {
-    return done(null, user);
-  }
-  return done(null, false);
+  return done(null, user || false);
 });
 
 passport.use(jwtStrategy);
