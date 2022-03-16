@@ -12,7 +12,7 @@ const opts = {
 };
 
 const jwtStrategy = new JwtStrategy(opts, async (payload, done) => {
-  const user = await User.findOne({ email: payload.email }).exec();
+  const user = await User.findOne({ email: payload.email }).populate("role");
   return done(null, user || false);
 });
 
