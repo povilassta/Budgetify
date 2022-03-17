@@ -1,4 +1,4 @@
-import Account from "../models/accounts.js";
+import Account from "../models/accounts.model.js";
 
 const accountsService = {
   addAccountIdParam: (req) => {

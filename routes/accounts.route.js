@@ -1,8 +1,8 @@
 import express from "express";
-import incomesRouter from "./incomes.js";
-import expensesRouter from "./expenses.js";
-import accountsService from "../services/accounts.js";
-import { authJwt } from "../services/auth.js";
+import incomesRouter from "./incomes.route.js";
+import expensesRouter from "./expenses.route.js";
+import accountsService from "../services/accounts.service.js";
+import { authJwt } from "../services/auth.service.js";
 const accountsRouter = express.Router();
 
 // GET user's accounts

@@ -3,7 +3,7 @@ import "dotenv/config";
 import passport from "passport";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../models/users.js";
+import User from "../models/users.model.js";
 
 // Jwt strategy
 const opts = {

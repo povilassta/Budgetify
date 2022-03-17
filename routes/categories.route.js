@@ -1,5 +1,5 @@
 import express from "express";
-import { authJwt } from "../services/auth.js";
+import { authJwt } from "../services/auth.service.js";
 const categoriesRouter = express.Router();
 
 // CATEGORIES ---------------------------------------------

@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import "dotenv/config";
-import Account from "../models/accounts.js";
-import Currency from "../models/currencies.js";
-import Role from "../models/roles.js";
-import User from "../models/users.js";
-import Category from "../models/categories.js";
-import Transaction from "../models/transactions.js";
+import Account from "../models/accounts.model.js";
+import Currency from "../models/currencies.model.js";
+import Role from "../models/roles.model.js";
+import User from "../models/users.model.js";
+import Category from "../models/categories.model.js";
+import Transaction from "../models/transactions.model.js";
 
 class Connection {
   constructor() {
