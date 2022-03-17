@@ -12,6 +12,7 @@ const categorySchema = mongoose.Schema({
   userId: {
     type: mongoose.ObjectId,
     ref: "User",
+    immutable: true,
   },
 });
 

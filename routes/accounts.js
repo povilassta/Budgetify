@@ -7,31 +7,27 @@ const accountsRouter = express.Router();
 
 // GET user's accounts
 accountsRouter.get("/", authJwt, (req, res) => {
-  res.send(`This route returns user's accounts`);
+  accountsService.getAccounts(req, res);
 });
 
 // GET user's account with an id
 accountsRouter.get("/:accountId", authJwt, (req, res) => {
-  res.send(
-    `This route returns user's account with id: ${req.params.accountId}`
-  );
+  accountsService.getAccountById(req, res);
 });
 
 // POST user's account
 accountsRouter.post("/", authJwt, (req, res) => {
-  res.send(`This route posts a new account for user`);
+  accountsService.insertAccount(req, res);
 });
 
 // PATCH user's account
 accountsRouter.patch("/:accountId", authJwt, (req, res) => {
-  res.send(`This route updates provided fields of user's account`);
+  accountsService.editAccount(req, res);
 });
 
 // DELETE user's account
 accountsRouter.delete("/:accountId", authJwt, (req, res) => {
-  res.send(
-    `This route deletes user's account with id: ${req.params.accountId}`
-  );
+  accountsService.deleteAccount(req, res);
 });
 
 // The fix for our parameters problem

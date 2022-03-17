@@ -5,6 +5,7 @@ import Currency from "../models/currencies.js";
 import Role from "../models/roles.js";
 import User from "../models/users.js";
 import Category from "../models/categories.js";
+import Transaction from "../models/transactions.js";
 
 class Connection {
   constructor() {
