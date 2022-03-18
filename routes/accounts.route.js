@@ -1,6 +1,5 @@
 import express from "express";
-import incomesRouter from "./incomes.route.js";
-import expensesRouter from "./expenses.route.js";
+import transactionsRouter from "./transactions.route.js";
 import accountsService from "../services/accounts.service.js";
 import { authJwt } from "../services/auth.service.js";
 const accountsRouter = express.Router();
@@ -22,7 +21,7 @@ accountsRouter.post("/", authJwt, (req, res) => {
 
 // PATCH user's account
 accountsRouter.patch("/:accountId", authJwt, (req, res) => {
-  accountsService.editAccount(req, res);
+  accountsService.updateAccount(req, res);
 });
 
 // DELETE user's account
@@ -32,21 +31,12 @@ accountsRouter.delete("/:accountId", authJwt, (req, res) => {
 
 // The fix for our parameters problem
 accountsRouter.use(
-  "/:accountId/incomes",
+  "/:accountId/transactions",
   function (req, res, next) {
     accountsService.addAccountIdParam(req);
     next();
   },
-  incomesRouter
-);
-
-accountsRouter.use(
-  "/:accountId/expenses",
-  function (req, res, next) {
-    accountsService.addAccountIdParam(req);
-    next();
-  },
-  expensesRouter
+  transactionsRouter
 );
 
 export default accountsRouter;

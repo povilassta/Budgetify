@@ -1,4 +1,5 @@
 import Account from "../models/accounts.model.js";
+import Currency from "../models/currencies.model.js";
 
 const accountsService = {
   addAccountIdParam: (req) => {
@@ -6,17 +7,21 @@ const accountsService = {
   },
 
   insertAccount: async (req, res) => {
-    const account = await Account.create({
-      userId: req.user._id,
-      title: req.body.title,
-      description: req.body.description,
-      currency: req.body.currency,
-    });
+    const checkCurrency = await Currency.findById(req.body.currency);
+    if (!checkCurrency)
+      res.status(400).json({ message: "Provided currency does not exist." });
+    else {
+      const account = new Account();
+      account.userId = req.user._id;
+      account.title = req.body.title;
+      account.description = req.body.description;
+      account.currency = req.body.currency;
 
-    account.save((err, doc) => {
-      if (err) res.status(500);
-      else res.status(201).json({ message: "Account created." });
-    });
+      account.save((err, doc) => {
+        if (err) res.status(500).json(err);
+        else res.status(201).json({ message: "Account created." });
+      });
+    }
   },
 
   getAccounts: async (req, res) => {
@@ -24,7 +29,6 @@ const accountsService = {
       const accounts = await Account.find({ userId: req.user._id }).populate(
         "currency"
       );
-      //console.log(accounts);
       res.status(200).json(accounts);
     } catch (err) {
       res.status(500).json({ message: "Something went wrong." });
@@ -47,19 +51,19 @@ const accountsService = {
     }
   },
 
-  editAccount: async (req, res) => {
+  updateAccount: async (req, res) => {
     try {
-      const updateResult = await Account.updateOne(
+      const updatedAccout = await Account.findOneAndUpdate(
         { _id: req.params.accountId, userId: req.user._id },
         req.body
       );
-      if (updateResult.n == 0) {
+      if (!updatedAccout) {
         res.status(404).json("Account not found.");
       } else {
         res.status(200).json({ message: "Account updated." });
       }
     } catch (err) {
-      res.status(500).json({ message: "Something went wrong." });
+      res.status(500).json(err);
     }
   },
 
