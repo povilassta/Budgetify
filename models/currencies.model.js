@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const currencyScheme = mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "Currency name is required."],
   },
   code: {
     type: String,
-    required: true,
+    required: [true, "Currency code is required."],
   },
 });
 

@@ -9,7 +9,7 @@ const accountSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: true,
+    required: [true, "Account title is required."],
   },
   description: {
     type: String,
@@ -17,6 +17,7 @@ const accountSchema = new mongoose.Schema({
   currency: {
     type: mongoose.ObjectId,
     ref: "Currency",
+    required: [true, "Account currency is required."],
   },
 });
 
