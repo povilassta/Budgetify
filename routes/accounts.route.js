@@ -2,6 +2,7 @@ import express from "express";
 import transactionsRouter from "./transactions.route.js";
 import AccountsController from "../controllers/accounts.contoller.js";
 import { authJwt } from "../services/auth.service.js";
+import AccountsService from "../services/accounts.service.js";
 const accountsRouter = express.Router();
 
 // GET user's accounts
@@ -23,7 +24,7 @@ accountsRouter.delete("/:accountId", authJwt, AccountsController.delete);
 accountsRouter.use(
   "/:accountId/transactions",
   function (req, res, next) {
-    accountsService.addAccountIdParam(req);
+    AccountsService.addAccountIdParam(req);
     next();
   },
   transactionsRouter

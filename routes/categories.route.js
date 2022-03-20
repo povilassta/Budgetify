@@ -8,17 +8,16 @@ const categoriesRouter = express.Router();
 // GET categories
 categoriesRouter.get("/", authJwt, CategoriesController.getAll);
 
+// GET one category
+categoriesRouter.get("/:categoryId", authJwt, CategoriesController.get);
+
 // POST category
 categoriesRouter.post("/", authJwt, CategoriesController.insert);
 
 // PATCH category
-categoriesRouter.patch("/:categoryId", authJwt, (req, res) => {
-  categoriesService.updateCategory(req, res);
-});
+categoriesRouter.patch("/:categoryId", authJwt, CategoriesController.update);
 
 // DELETE category
-categoriesRouter.delete("/:categoryId", authJwt, (req, res) => {
-  res.send(`This route removes category`);
-});
+categoriesRouter.delete("/:categoryId", authJwt, CategoriesController.delete);
 
 export default categoriesRouter;

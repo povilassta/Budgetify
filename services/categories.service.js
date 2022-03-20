@@ -1,5 +1,6 @@
 import Category from "../models/categories.model.js";
 import Transaction from "../models/transactions.model.js";
+import TransactionsService from "./transactions.service.js";
 
 const categoriesService = {
   getAll: async (userId) => {
@@ -21,6 +22,15 @@ const categoriesService = {
         error.statusCode = 404;
         throw error;
       }
+    } catch (errors) {
+      throw errors;
+    }
+  },
+
+  getByNameType: async (name, type, userId) => {
+    try {
+      const category = await Category.findOne({ name, type, userId });
+      return category;
     } catch (errors) {
       throw errors;
     }
@@ -58,7 +68,31 @@ const categoriesService = {
     }
   },
 
-  delete: async (categoryId, userId) => {},
+  delete: async (categoryId, userId) => {
+    try {
+      const category = await Category.findOne({ _id: categoryId, userId });
+      if (category) {
+        if (
+          await (
+            await TransactionsService.getForAllAccounts(categoryId)
+          ).length
+        ) {
+          const error = new Error("Category has transactions");
+          error.statusCode = 400;
+          throw error;
+        } else {
+          category.delete();
+          return category;
+        }
+      } else {
+        const error = new Error("Category not found");
+        error.statusCode = 404;
+        throw error;
+      }
+    } catch (errors) {
+      throw errors;
+    }
+  },
 };
 
 export default categoriesService;
