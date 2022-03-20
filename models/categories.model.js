@@ -21,6 +21,8 @@ const categorySchema = mongoose.Schema({
   },
 });
 
+categorySchema.index({ name: 1, type: 1, userId: 1 }, { unique: true });
+
 categorySchema.pre("findOneAndUpdate", function (next) {
   this.options.runValidators = true;
   next();

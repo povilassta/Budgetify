@@ -2,77 +2,63 @@ import Category from "../models/categories.model.js";
 import Transaction from "../models/transactions.model.js";
 
 const categoriesService = {
-  insertCategory: async (req, res) => {
-    const sameCategory = await Category.findOne({
-      userId: req.user._id,
-      name: req.body.name,
-      type: req.body.type,
-    });
-
-    if (!sameCategory) {
-      const category = new Category();
-      category.userId = req.user._id;
-      category.name = req.body.name;
-      category.type = req.body.type;
-
-      category.save((err, doc) => {
-        if (err) res.status(500).json(err);
-        else res.status(201).json({ message: "Category created." });
-      });
-    } else {
-      res.status(400).json({
-        message: "Category of the same name and type already exists.",
-      });
+  getAll: async (userId) => {
+    try {
+      const categories = await Category.find({ userId });
+      return categories;
+    } catch (errors) {
+      throw errors;
     }
   },
 
-  getCategories: async (req, res) => {
+  get: async (categoryId, userId) => {
     try {
-      const categories = await Category.find({ userId: req.user._id });
-      res.status(200).json(categories);
-    } catch (err) {
-      res.status(500).json({ message: "Something went wrong." });
+      const category = await Category.findOne({ _id: categoryId, userId });
+      if (category) {
+        return category;
+      } else {
+        const error = new Error("Category not found");
+        error.statusCode = 404;
+        throw error;
+      }
+    } catch (errors) {
+      throw errors;
     }
   },
 
-  updateCategory: async (req, res) => {
+  insert: async (data, userId) => {
     try {
-      const updatedCategory = await Category.findOneAndUpdate(
-        { _id: req.params.categoryId, userId: req.user._id },
-        req.body
+      const category = await Category.create({ ...data, userId });
+      if (category) {
+        return category;
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (errors) {
+      throw errors;
+    }
+  },
+
+  update: async (data, categoryId, userId) => {
+    try {
+      const category = await Category.findOneAndUpdate(
+        { _id: categoryId, userId },
+        data,
+        { new: true }
       );
-      if (!updatedCategory) {
-        res.status(404).json("Category not found.");
+      if (category) {
+        return category;
       } else {
-        res.status(200).json({ message: "Category updated." });
+        const error = new Error("Category not found");
+        error.statusCode = 404;
+        throw error;
       }
-    } catch (err) {
-      res.status(500).json(err);
+    } catch (errors) {
+      throw errors;
     }
   },
 
-  deleteCategory: async (req, res) => {
-    const categoryToDelete = await Category.findOne({
-      userId: req.user._id,
-      _id: req.params.accountId,
-    });
-
-    if (categoryToDelete) {
-      const checkTransactions = await Transaction.find({
-        accountId: req.params.accountId,
-      });
-      if (!checkTransactions) {
-        categoryToDelete.deleteOne();
-        res.status(200).json({ message: "Category deleted." });
-      } else {
-        res.status(400).json({
-          message: "Category can't be deleted, because it has transfers in it.",
-        });
-      }
-    } else {
-      res.status(404).json({ message: "Category not found." });
-    }
-  },
+  delete: async (categoryId, userId) => {},
 };
 
 export default categoriesService;
