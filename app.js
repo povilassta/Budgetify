@@ -19,6 +19,4 @@ app.use("/", authRouter);
 
 app.use(errorHandler);
 
-//app.listen(3000);
-
 export default app;
