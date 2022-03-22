@@ -1,7 +1,7 @@
 import express from "express";
 import CategoriesController from "../controllers/categories.controller.js";
 import { authJwt } from "../services/auth.service.js";
-import categoriesService from "../services/categories.service.js";
+import CategoryService from "../services/categories.service.js";
 const categoriesRouter = express.Router();
 
 // CATEGORIES ---------------------------------------------
