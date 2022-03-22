@@ -10,6 +10,7 @@ const transactionsService = {
         return transactions;
       } else {
         const error = new Error("Account not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
@@ -29,11 +30,13 @@ const transactionsService = {
           return transaction;
         } else {
           const error = new Error("Transaction not found");
+          error.name = "NotFoundError";
           error.statusCode = 404;
           throw error;
         }
       } else {
         const error = new Error("Account not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
@@ -75,6 +78,7 @@ const transactionsService = {
         return transaction;
       } else {
         const error = new Error("Account not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
@@ -94,11 +98,13 @@ const transactionsService = {
           return transaction;
         } else {
           const error = new Error("Transaction not found");
+          error.name = "NotFoundError";
           error.statusCode = 404;
           throw error;
         }
       } else {
         const error = new Error("Account not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }

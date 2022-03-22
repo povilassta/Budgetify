@@ -23,6 +23,7 @@ const AccountsService = {
       }).populate("currency");
       if (!account) {
         let error = new Error("Account not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
@@ -40,7 +41,7 @@ const AccountsService = {
         if (account) {
           return account;
         } else {
-          throw new Error("Something went wrong");
+          throw new Error();
         }
       }
     } catch (errors) {
@@ -50,7 +51,10 @@ const AccountsService = {
 
   update: async (data, accountId, userId) => {
     try {
-      if (data.currency && (await CurrencyService.get(data.currency))) {
+      if (
+        !data.currency ||
+        (data.currency && (await CurrencyService.get(data.currency)))
+      ) {
         const account = await Account.findOneAndUpdate(
           { _id: accountId, userId },
           data,
@@ -60,6 +64,7 @@ const AccountsService = {
           return account;
         } else {
           const error = new Error("Account not found");
+          error.name = "NotFoundError";
           error.statusCode = 404;
           throw error;
         }
@@ -80,6 +85,7 @@ const AccountsService = {
         return account;
       } else {
         const error = new Error("Account not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }

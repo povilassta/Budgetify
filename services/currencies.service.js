@@ -8,6 +8,7 @@ const CurrencyService = {
         return currency;
       } else {
         const error = new Error("Currency not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
