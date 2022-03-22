@@ -1,6 +1,9 @@
 import Category from "../models/categories.model.js";
 import Transaction from "../models/transactions.model.js";
 import TransactionsService from "./transactions.service.js";
+import NotFoundError from "../errors/notfound.error.js";
+import ConflictError from "../errors/conflict.error.js";
+import DuplicateError from "../errors/duplicate.error.js";
 
 const CategoryService = {
   getAll: async (userId) => {
@@ -18,10 +21,7 @@ const CategoryService = {
       if (category) {
         return category;
       } else {
-        const error = new Error("Category not found");
-        error.name = "NotFoundError";
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Category not found");
       }
     } catch (errors) {
       throw errors;
@@ -40,16 +40,13 @@ const CategoryService = {
   insert: async (data, userId) => {
     try {
       if (await CategoryService.getByNameType(data.name, data.type, userId)) {
-        const error = new Error("Category already exists.");
-        error.name = "DuplicateError";
-        error.statusCode = 400;
-        throw error;
+        throw new DuplicateError("Category already exists");
       } else {
         const category = await Category.create({ ...data, userId });
         if (category) {
           return category;
         } else {
-          throw new Error("Something went wrong");
+          throw new Error();
         }
       }
     } catch (errors) {
@@ -67,9 +64,7 @@ const CategoryService = {
       if (category) {
         return category;
       } else {
-        const error = new Error("Category not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Category not found");
       }
     } catch (errors) {
       throw errors;
@@ -81,18 +76,13 @@ const CategoryService = {
       const category = await Category.findOne({ _id: categoryId, userId });
       if (category) {
         if ((await TransactionsService.getForAllAccounts(categoryId)).length) {
-          const error = new Error("Category has transactions");
-          error.statusCode = 400;
-          throw error;
+          throw new ConflictError("Category still has transactions");
         } else {
           category.delete();
           return category;
         }
       } else {
-        const error = new Error("Category not found");
-        error.name = "NotFoundError";
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Category not found");
       }
     } catch (errors) {
       throw errors;
