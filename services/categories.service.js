@@ -2,7 +2,7 @@ import Category from "../models/categories.model.js";
 import Transaction from "../models/transactions.model.js";
 import TransactionsService from "./transactions.service.js";
 
-const categoriesService = {
+const CategoryService = {
   getAll: async (userId) => {
     try {
       const categories = await Category.find({ userId });
@@ -19,6 +19,7 @@ const categoriesService = {
         return category;
       } else {
         const error = new Error("Category not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
@@ -38,11 +39,18 @@ const categoriesService = {
 
   insert: async (data, userId) => {
     try {
-      const category = await Category.create({ ...data, userId });
-      if (category) {
-        return category;
+      if (await CategoryService.getByNameType(data.name, data.type, userId)) {
+        const error = new Error("Category already exists.");
+        error.name = "DuplicateError";
+        error.statusCode = 400;
+        throw error;
       } else {
-        throw new Error("Something went wrong");
+        const category = await Category.create({ ...data, userId });
+        if (category) {
+          return category;
+        } else {
+          throw new Error("Something went wrong");
+        }
       }
     } catch (errors) {
       throw errors;
@@ -82,6 +90,7 @@ const categoriesService = {
         }
       } else {
         const error = new Error("Category not found");
+        error.name = "NotFoundError";
         error.statusCode = 404;
         throw error;
       }
@@ -91,4 +100,4 @@ const categoriesService = {
   },
 };
 
-export default categoriesService;
+export default CategoryService;
