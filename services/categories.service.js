@@ -72,11 +72,7 @@ const categoriesService = {
     try {
       const category = await Category.findOne({ _id: categoryId, userId });
       if (category) {
-        if (
-          await (
-            await TransactionsService.getForAllAccounts(categoryId)
-          ).length
-        ) {
+        if ((await TransactionsService.getForAllAccounts(categoryId)).length) {
           const error = new Error("Category has transactions");
           error.statusCode = 400;
           throw error;
