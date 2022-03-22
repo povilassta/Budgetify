@@ -13,6 +13,7 @@ const accountSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    default: "",
   },
   currency: {
     type: mongoose.ObjectId,
@@ -26,7 +27,6 @@ accountSchema.pre(
   "deleteOne",
   { document: true, query: false },
   function (next) {
-    console.log(this);
     Transaction.deleteMany({ accountId: this._id }).exec();
     next();
   }
