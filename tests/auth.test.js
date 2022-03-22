@@ -1,4 +1,4 @@
-import app from "../index.js";
+import app from "../app.js";
 import supertest from "supertest";
 import mongoose from "mongoose";
 import "dotenv/config";
