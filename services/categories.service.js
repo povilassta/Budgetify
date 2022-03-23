@@ -3,7 +3,7 @@ import Transaction from "../models/transactions.model.js";
 import TransactionsService from "./transactions.service.js";
 import NotFoundError from "../errors/notfound.error.js";
 import ConflictError from "../errors/conflict.error.js";
-import DuplicateError from "../errors/duplicate.error.js";
+import BadRequestError from "../errors/badrequest.error.js";
 
 const CategoryService = {
   getAll: async (userId) => {
@@ -40,7 +40,7 @@ const CategoryService = {
   insert: async (data, userId) => {
     try {
       if (await CategoryService.getByNameType(data.name, data.type, userId)) {
-        throw new DuplicateError("Category already exists");
+        throw new BadRequestError("Category already exists");
       } else {
         const category = await Category.create({ ...data, userId });
         if (category) {
