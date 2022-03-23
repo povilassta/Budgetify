@@ -1,23 +1,24 @@
-import app from "../app.js";
 import supertest from "supertest";
-import mongoose from "mongoose";
-import "dotenv/config";
+import db from "./db.js";
+import app from "../app.js";
 
 describe("accounts", () => {
   let token = null;
   let createdAccountId = null;
+  let data = null;
 
   beforeAll(async () => {
-    await mongoose.disconnect();
-    await mongoose.connect(process.env.TESTDB_URL);
+    await db.connect();
+    data = await db.seed();
     const response = await supertest(app)
       .post("/login")
-      .send({ email: "admin@admin.lt", password: "admin" });
+      .send({ email: "test@test.com", password: "test" });
     token = response.body.token;
   });
 
   afterAll(async () => {
-    await mongoose.disconnect();
+    await db.clear();
+    await db.close();
   });
 
   describe("GET /accounts", () => {
@@ -55,7 +56,7 @@ describe("accounts", () => {
     describe("When account exists", () => {
       it("returns account object", async () => {
         const response = await supertest(app)
-          .get("/accounts/6233a291e5c2500bdd0eacff")
+          .get(`/accounts/${data.testAccount._id}`)
           .set("Authorization", token);
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject({
@@ -101,7 +102,7 @@ describe("accounts", () => {
     describe("When trying to access acount that does not belong to the user", () => {
       it("returns not found", async () => {
         const response = await supertest(app)
-          .get("/accounts/623899070399905fb71aa6fe")
+          .get(`/accounts/${data.otherAccount._id}`)
           .set("Authorization", token);
         expect(response.status).toBe(404);
       });
@@ -115,7 +116,7 @@ describe("accounts", () => {
           .post("/accounts")
           .send({
             title: "",
-            currency: "6231ac0595f44628bc846e90",
+            currency: data.testCurrency._id,
           })
           .set("Authorization", token);
         expect(response.status).toBe(400);
@@ -128,7 +129,7 @@ describe("accounts", () => {
           .post("/accounts")
           .send({
             title: "Test account",
-            currency: "6231ac0595f44628bc846e90",
+            currency: data.testCurrency._id,
           })
           .set("Authorization", token);
         expect(response.status).toBe(201);
@@ -136,7 +137,7 @@ describe("accounts", () => {
           _id: expect.any(String),
           userId: expect.any(String),
           title: "Test account",
-          currency: "6231ac0595f44628bc846e90",
+          currency: data.testCurrency._id,
           description: "",
         });
         createdAccountId = response.body._id;
@@ -159,7 +160,7 @@ describe("accounts", () => {
           _id: expect.any(String),
           userId: expect.any(String),
           title: "Updated test account",
-          currency: "6231ac0595f44628bc846e90",
+          currency: data.testCurrency._id,
           description: "Testing testing 123",
         });
       });
@@ -167,7 +168,7 @@ describe("accounts", () => {
     describe("when account doesnt belong to the user and info is correct", () => {
       it("returns not found", async () => {
         const response = await supertest(app)
-          .patch(`/accounts/623899070399905fb71aa6fe`)
+          .patch(`/accounts/${data.otherAccount._id}`)
           .send({
             title: "Updated test account",
             description: "Testing testing 123",
@@ -189,7 +190,7 @@ describe("accounts", () => {
           _id: expect.any(String),
           userId: expect.any(String),
           title: "Updated test account",
-          currency: "6231ac0595f44628bc846e90",
+          currency: data.testCurrency._id,
           description: "Testing testing 123",
         });
       });
@@ -198,7 +199,7 @@ describe("accounts", () => {
     describe("when account exists but does not belong to the user", () => {
       it("returns not found", async () => {
         const response = await supertest(app)
-          .delete("/accounts/623899070399905fb71aa6fe")
+          .delete(`/accounts/${data.otherAccount._id}`)
           .set("Authorization", token);
         expect(response.status).toBe(404);
       });

@@ -21,10 +21,12 @@ class Connection {
   }
 
   async connect(url) {
-    try {
-      await mongoose.connect(url);
-    } catch (e) {
-      throw e;
+    if (process.env.NODE_ENV !== "test") {
+      try {
+        await mongoose.connect(url);
+      } catch (e) {
+        throw e;
+      }
     }
   }
 }

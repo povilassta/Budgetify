@@ -1,16 +1,16 @@
-import app from "../app.js";
 import supertest from "supertest";
-import mongoose from "mongoose";
-import "dotenv/config";
+import db from "./db.js";
+import app from "../app.js";
 
 describe("auth", () => {
   beforeAll(async () => {
-    await mongoose.disconnect();
-    await mongoose.connect(process.env.TESTDB_URL);
+    await db.connect();
+    await db.seed();
   });
 
   afterAll(async () => {
-    await mongoose.disconnect();
+    await db.clear();
+    await db.close();
   });
 
   describe("POST /login", () => {
@@ -18,7 +18,7 @@ describe("auth", () => {
       it("returns jwt token", async () => {
         const response = await supertest(app)
           .post("/login")
-          .send({ email: "admin@admin.lt", password: "admin" });
+          .send({ email: "test@test.com", password: "test" });
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject({
           token: expect.any(String),
