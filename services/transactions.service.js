@@ -1,6 +1,7 @@
 import Transaction from "../models/transactions.model.js";
 import AccountsService from "./accounts.service.js";
 import CategoryService from "./categories.service.js";
+import NotFoundError from "../errors/notfound.error.js";
 
 const transactionsService = {
   getAll: async (accountId, userId) => {
@@ -9,9 +10,7 @@ const transactionsService = {
         const transactions = await Transaction.find({ accountId });
         return transactions;
       } else {
-        const error = new Error("Account not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Account not found");
       }
     } catch (errors) {
       throw errors;
@@ -28,14 +27,10 @@ const transactionsService = {
         if (transaction) {
           return transaction;
         } else {
-          const error = new Error("Transaction not found");
-          error.statusCode = 404;
-          throw error;
+          throw new NotFoundError("Transaction not found");
         }
       } else {
-        const error = new Error("Account not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Account not found");
       }
     } catch (errors) {
       throw errors;
@@ -74,9 +69,7 @@ const transactionsService = {
 
         return transaction;
       } else {
-        const error = new Error("Account not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Account not found");
       }
     } catch (errors) {
       throw errors;
@@ -93,14 +86,10 @@ const transactionsService = {
         if (transaction) {
           return transaction;
         } else {
-          const error = new Error("Transaction not found");
-          error.statusCode = 404;
-          throw error;
+          throw new NotFoundError("Transaction not found");
         }
       } else {
-        const error = new Error("Account not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Account not found");
       }
     } catch (errors) {
       throw errors;

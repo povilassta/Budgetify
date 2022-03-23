@@ -1,5 +1,6 @@
 import Account from "../models/accounts.model.js";
 import CurrencyService from "./currencies.service.js";
+import NotFoundError from "../errors/notfound.error.js";
 
 const AccountsService = {
   addAccountIdParam: (req) => {
@@ -22,9 +23,7 @@ const AccountsService = {
         userId,
       }).populate("currency");
       if (!account) {
-        let error = new Error("Account not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Account not found");
       }
       return account;
     } catch (errors) {
@@ -40,7 +39,7 @@ const AccountsService = {
         if (account) {
           return account;
         } else {
-          throw new Error("Something went wrong");
+          throw new Error();
         }
       }
     } catch (errors) {
@@ -50,7 +49,10 @@ const AccountsService = {
 
   update: async (data, accountId, userId) => {
     try {
-      if (data.currency && (await CurrencyService.get(data.currency))) {
+      if (
+        !data.currency ||
+        (data.currency && (await CurrencyService.get(data.currency)))
+      ) {
         const account = await Account.findOneAndUpdate(
           { _id: accountId, userId },
           data,
@@ -59,9 +61,7 @@ const AccountsService = {
         if (account) {
           return account;
         } else {
-          const error = new Error("Account not found");
-          error.statusCode = 404;
-          throw error;
+          throw new NotFoundError("Account not found");
         }
       }
     } catch (errors) {
@@ -79,9 +79,7 @@ const AccountsService = {
         await account.deleteOne();
         return account;
       } else {
-        const error = new Error("Account not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Account not found");
       }
     } catch (errors) {
       throw errors;

@@ -1,4 +1,5 @@
 import Currency from "../models/currencies.model.js";
+import NotFoundError from "../errors/notfound.error.js";
 
 const CurrencyService = {
   get: async (currencyId) => {
@@ -7,9 +8,7 @@ const CurrencyService = {
       if (currency) {
         return currency;
       } else {
-        const error = new Error("Currency not found");
-        error.statusCode = 404;
-        throw error;
+        throw new NotFoundError("Currency not found");
       }
     } catch (errors) {
       throw errors;
