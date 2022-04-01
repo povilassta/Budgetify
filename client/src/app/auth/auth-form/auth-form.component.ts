@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./auth-form.component.sass'],
 })
 export class AuthFormComponent {
-  public hide = true;
+  public hide: boolean = true;
   public loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
