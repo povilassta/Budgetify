@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import * as moment from 'moment';
+import { LoginType } from '../interfaces/logintype.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ export class AuthService {
 
   public login(email: string, password: string): Observable<any> {
     return this.http
-      .post('http://localhost:3000/login', { email, password })
-      .pipe(tap((res) => this.setSession(res)));
+      .post<LoginType>('http://localhost:3000/login', { email, password })
+      .pipe(tap((res: LoginType) => this.setSession(res)));
   }
 
   public isLoggedIn(): boolean {
@@ -30,7 +31,8 @@ export class AuthService {
     return moment(expiresAt);
   }
 
-  private setSession(res: any): void {
+  private setSession(res: LoginType): void {
+    console.log(res);
     const expiresAt = moment().add(1, 'h');
     localStorage.setItem('token', res.token);
     localStorage.setItem('expiresAt', JSON.stringify(expiresAt.valueOf()));
