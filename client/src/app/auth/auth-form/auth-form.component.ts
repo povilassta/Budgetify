@@ -9,18 +9,16 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./auth-form.component.sass'],
 })
 export class AuthFormComponent {
-  hide = true;
-  loginForm: FormGroup = new FormGroup({
+  public hide = true;
+  public loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
   constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit() {
+  public onSubmit(): void {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe((data) => {
-      console.log('successful login');
-      console.log(data);
       this.router.navigateByUrl('/');
     });
   }

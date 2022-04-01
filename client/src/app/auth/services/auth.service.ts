@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import * as moment from 'moment';
 
 @Injectable({
@@ -9,32 +9,30 @@ import * as moment from 'moment';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string) {
+  public login(email: string, password: string): Observable<any> {
     return this.http
       .post('http://localhost:3000/login', { email, password })
       .pipe(tap((res) => this.setSession(res)));
   }
 
-  isLoggedIn() {
+  public isLoggedIn(): boolean {
     return moment().isBefore(this.getExpiration());
   }
 
-  logout() {
+  public logout(): void {
     localStorage.removeItem('expiresAt');
     localStorage.removeItem('token');
   }
 
-  getExpiration() {
+  private getExpiration(): moment.Moment {
     const expiration = localStorage.getItem('expiresAt');
     const expiresAt = JSON.parse(localStorage.getItem('expiresAt') || '{}');
     return moment(expiresAt);
   }
 
-  private setSession(res: any) {
+  private setSession(res: any): void {
     const expiresAt = moment().add(1, 'h');
     localStorage.setItem('token', res.token);
     localStorage.setItem('expiresAt', JSON.stringify(expiresAt.valueOf()));
-    console.log(JSON.stringify(expiresAt.valueOf()));
-    console.log(Date.now());
   }
 }

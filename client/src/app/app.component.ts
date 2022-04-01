@@ -8,15 +8,15 @@ import { AuthService } from './auth/services/auth.service';
   styleUrls: ['./app.component.sass'],
 })
 export class AppComponent {
-  title = 'bugetify';
+  public title = 'bugetify';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  get isLoggedIn() {
+  public get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  logout() {
+  public logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
