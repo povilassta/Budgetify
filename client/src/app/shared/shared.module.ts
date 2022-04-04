@@ -9,6 +9,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [],
@@ -23,6 +25,8 @@ import { MatMenuModule } from '@angular/material/menu';
     LayoutModule,
     MatListModule,
     MatMenuModule,
+    MatCardModule,
+    MatGridListModule,
   ],
   exports: [
     MatButtonModule,
@@ -34,6 +38,8 @@ import { MatMenuModule } from '@angular/material/menu';
     LayoutModule,
     MatListModule,
     MatMenuModule,
+    MatCardModule,
+    MatGridListModule,
   ],
 })
 export class SharedModule {}

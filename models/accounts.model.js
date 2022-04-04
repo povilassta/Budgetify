@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Transaction from "./transactions.model.js";
+import transactionService from "../services/transactions.service.js";
 
 const accountSchema = new mongoose.Schema({
   userId: {

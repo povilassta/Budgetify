@@ -1,0 +1,38 @@
+.card
+    display: flex
+    width: 50rem
+    height: 2rem
+    justify-content: space-between
+    background: white
+    margin: 0.2rem
+    padding: 0.5rem
+    border-radius: 15px
+    text-align: center
+    line-height: 2rem
+    &__category
+        width: 5rem
+        background: #d3d3d3
+        border-radius: 5px
+        text-align: center
+        line-height: 2rem
+
+    &__amount
+        font-size: 1rem
+        &.income
+            color: green
+        &.expense
+            color: red
+
+.transaction-icon
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 2rem
+    height: 2rem
+    border-radius: 50%
+    background-color: green
+    color: white
+    &.income
+        background-color: green
+    &.expense 
+        background-color: red

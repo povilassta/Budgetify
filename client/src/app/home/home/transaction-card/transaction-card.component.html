@@ -1,0 +1,23 @@
+<div class="card">
+  <mat-icon
+    [ngClass]="{
+      income: transaction.type === 'income',
+      expense: transaction.type === 'expense'
+    }"
+    class="transaction-icon"
+  >
+    {{ transaction.type === 'income' ? 'arrow_downward' : 'arrow_upward' }}
+  </mat-icon>
+  <div class="card__category">{{ transaction.category.name }}</div>
+  <div class="card__title">{{ transaction.title }}</div>
+  <div class="card__date">{{ formatDate(transaction.transactionDate) }}</div>
+  <div
+    class="card__amount"
+    [ngClass]="{
+      income: transaction.type === 'income',
+      expense: transaction.type === 'expense'
+    }"
+  >
+    {{ transaction.type === 'income' ? '' : '-' }}{{ transaction.amount }}
+  </div>
+</div>
