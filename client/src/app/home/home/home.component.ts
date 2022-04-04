@@ -19,35 +19,6 @@ export class HomeComponent implements OnInit {
     return item._id;
   }
 
-  public getTransactions(type?: string): Transaction[] {
-    if (!type) {
-      return this.transactionService.transactions;
-    }
-    if (type === 'income') {
-      this.isExpenseFilter = false;
-      if (this.isIncomeFilter) {
-        this.isIncomeFilter = false;
-        return this.transactionService.transactions;
-      } else {
-        this.isIncomeFilter = true;
-        return this.transactionService.transactions.filter((t) => {
-          return t.type === 'income';
-        });
-      }
-    } else {
-      this.isIncomeFilter = false;
-      if (this.isExpenseFilter) {
-        this.isExpenseFilter = false;
-        return this.transactionService.transactions;
-      } else {
-        this.isExpenseFilter = true;
-        return this.transactionService.transactions.filter((t) => {
-          return t.type === 'expense';
-        });
-      }
-    }
-  }
-
   constructor(
     private accountsService: AccountService,
     public transactionService: TransactionService
