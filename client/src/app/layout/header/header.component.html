@@ -1,0 +1,37 @@
+<mat-toolbar class="navbar">
+  <div class="navbar__logo">
+    <span *ngIf="!(isWideScreen$ | async)">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </span>
+    <span>Bugetify</span>
+  </div>
+  <ng-container *ngIf="isWideScreen$ | async">
+    <div class="navbar__links">
+      <span>Categories</span>
+      <span>Subscriptions</span>
+      <span>Obligatory</span>
+      <span>Statistic</span>
+      <span>Admin</span>
+    </div>
+  </ng-container>
+  <div class="navbar__user" mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon><span>{{ currentUser }}</span>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" role="navigation">
+    <mat-nav-list>
+      <a mat-list-item href="">Categories</a>
+      <a mat-list-item href="">Subscriptions</a>
+      <a mat-list-item href="">Obligatory</a>
+      <a mat-list-item href="">Statistic</a>
+      <a mat-list-item href="">Admin</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content></mat-sidenav-content>
+</mat-sidenav-container>
