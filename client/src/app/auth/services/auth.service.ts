@@ -23,6 +23,7 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem('expiresAt');
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
   }
 
   private getExpiration(): moment.Moment {
@@ -36,5 +37,6 @@ export class AuthService {
     const expiresAt = moment().add(1, 'h');
     localStorage.setItem('token', res.token);
     localStorage.setItem('expiresAt', JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem('name', res.name);
   }
 }
