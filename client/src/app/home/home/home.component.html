@@ -6,6 +6,7 @@
     >
     </app-account-card>
   </div>
+
   <div class="main__transactions">
     <mat-form-field class="main__transactions__searchfield" appearance="fill">
       <mat-label>Search</mat-label>
@@ -29,7 +30,7 @@
     </p>
     <app-transaction-card
       *ngFor="
-        let transaction of transactionService.transactions
+        let transaction of transactionService.filteredTransactions
           | searchFilter: value;
         let i = index;
         trackBy: trackBy
@@ -37,12 +38,25 @@
       [transaction]="transaction"
     ></app-transaction-card>
   </div>
+
   <div class="main__options">
     <div class="filter-buttons">
-      <button class="filter-buttons__income" mat-mini-fab aria-label="income">
+      <button
+        [ngClass]="{ selected: transactionService.isIncomeFilter }"
+        class="filter-buttons__income"
+        mat-mini-fab
+        aria-label="income"
+        (click)="transactionService.filterTransactions('income')"
+      >
         <mat-icon>arrow_downward</mat-icon>
       </button>
-      <button class="filter-buttons__expense" mat-mini-fab aria-label="expense">
+      <button
+        [ngClass]="{ selected: transactionService.isExpenseFilter }"
+        class="filter-buttons__expense"
+        mat-mini-fab
+        aria-label="expense"
+        (click)="transactionService.filterTransactions('expense')"
+      >
         <mat-icon>arrow_upward</mat-icon>
       </button>
     </div>

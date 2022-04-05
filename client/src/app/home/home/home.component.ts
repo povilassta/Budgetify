@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { throwStatement } from '@babel/types';
 import { Account } from './account-card/account.model';
 import { AccountService } from './account-card/services/accounts.service';
 import { TransactionService } from './transaction-card/services/transaction.service';
@@ -11,9 +12,8 @@ import { Transaction } from './transaction-card/transaction.model';
 })
 export class HomeComponent implements OnInit {
   public accounts!: Account[];
+  public transactions!: Transaction[];
   public value: string = '';
-  public isIncomeFilter: boolean = false;
-  public isExpenseFilter: boolean = false;
 
   public trackBy(index: number, item: Account | Transaction): string {
     return item._id;
