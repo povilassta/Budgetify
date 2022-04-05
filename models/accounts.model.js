@@ -23,6 +23,14 @@ const accountSchema = new mongoose.Schema({
   },
 });
 
+accountSchema.set("toJSON", { virtuals: true });
+
+accountSchema.virtual("transactions", {
+  ref: "Transaction",
+  localField: "_id",
+  foreignField: "accountId",
+});
+
 // Middleware: when account is removed, remove its transactions.
 accountSchema.pre(
   "deleteOne",
