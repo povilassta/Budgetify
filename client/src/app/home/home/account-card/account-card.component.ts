@@ -13,9 +13,7 @@ export class AccountCardComponent implements OnInit {
 
   public onCardClick(): void {
     this.accountService.activateAccount(this.account._id);
-    this.transactionService.getTransactions(this.account._id).subscribe({
-      next: (data) => (this.transactionService.transactions = data),
-    });
+    this.transactionService.getTransactions(this.account._id).subscribe();
   }
 
   constructor(
