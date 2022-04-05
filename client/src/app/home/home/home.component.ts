@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { throwStatement } from '@babel/types';
-import { Account } from './account-card/account.model';
+import { Account } from '../../models/account.model';
 import { AccountService } from './account-card/services/accounts.service';
 import { TransactionService } from './transaction-card/services/transaction.service';
-import { Transaction } from './transaction-card/transaction.model';
+import { Transaction } from '../../models/transaction.model';
 
 @Component({
   selector: 'app-home',

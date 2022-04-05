@@ -1,4 +1,4 @@
-import { Transaction } from '../transaction-card/transaction.model';
+import { Transaction } from './transaction.model';
 
 export interface Account {
   _id: string;

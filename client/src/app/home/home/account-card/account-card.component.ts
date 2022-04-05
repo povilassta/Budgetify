@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TransactionService } from '../transaction-card/services/transaction.service';
-import { Account } from './account.model';
+import { Account } from '../../../models/account.model';
 import { AccountService } from './services/accounts.service';
 
 @Component({

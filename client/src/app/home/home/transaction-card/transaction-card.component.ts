@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import { Transaction } from './transaction.model';
+import { Transaction } from '../../../models/transaction.model';
 
 @Component({
   selector: 'app-transaction-card',
