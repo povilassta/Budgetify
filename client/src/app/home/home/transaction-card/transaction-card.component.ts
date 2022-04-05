@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Transaction } from '../../../models/transaction.model';
+import { AccountService } from '../account-card/services/accounts.service';
 
 @Component({
   selector: 'app-transaction-card',
@@ -9,7 +10,7 @@ import { Transaction } from '../../../models/transaction.model';
 export class TransactionCardComponent implements OnInit {
   @Input() transaction!: Transaction;
 
-  constructor() {}
+  constructor(public accountService: AccountService) {}
 
   ngOnInit(): void {}
 }

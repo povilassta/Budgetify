@@ -26,4 +26,8 @@ export class AccountService {
     const account = this.accounts.find((el) => el._id === id);
     this.activeAccount = account!;
   }
+
+  public getActiveAccountCurrency(): string {
+    return this.activeAccount.currency.code;
+  }
 }

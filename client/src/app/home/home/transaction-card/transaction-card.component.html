@@ -8,8 +8,8 @@
   >
     {{ transaction.type === 'income' ? 'arrow_downward' : 'arrow_upward' }}
   </mat-icon>
-  <div class="card__category">{{ transaction.category.name }}</div>
-  <div class="card__title">{{ transaction.title }}</div>
+  <div class="card__category">{{ transaction.category.name | titlecase }}</div>
+  <div class="card__title">{{ transaction.title | titlecase }}</div>
   <div class="card__date">{{ transaction.transactionDate | date }}</div>
   <div
     class="card__amount"
@@ -18,6 +18,10 @@
       expense: transaction.type === 'expense'
     }"
   >
-    {{ transaction.type === 'income' ? '' : '-' }}{{ transaction.amount }}
+    {{ transaction.type === 'income' ? '' : '-'
+    }}{{
+      transaction.amount.valueOf()
+        | currency: accountService.getActiveAccountCurrency()
+    }}
   </div>
 </div>
