@@ -27,4 +27,16 @@ export class AccountCardComponent implements OnInit {
     const firstAccount = this.accountService.accounts[0];
     this.accountService.activateAccount(firstAccount._id);
   }
+
+  public calculateBalance(account: Account) {
+    let sum = 0;
+    for (let transaction of account.transactions) {
+      if (transaction.type === 'income') {
+        sum += transaction.amount.valueOf();
+      } else if (transaction.type === 'expense') {
+        sum -= transaction.amount.valueOf();
+      }
+    }
+    return sum;
+  }
 }

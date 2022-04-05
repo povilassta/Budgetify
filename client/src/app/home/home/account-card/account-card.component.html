@@ -5,6 +5,6 @@
 >
   <mat-card-subtitle class="card__title">{{ account.title }}</mat-card-subtitle>
   <mat-card-title class="card__amount"
-    >{{ 123 }} {{ account.currency.code }}</mat-card-title
+    >{{ calculateBalance(account) }} {{ account.currency.code }}</mat-card-title
   >
 </mat-card>

@@ -1,3 +1,5 @@
+import { Transaction } from '../transaction-card/transaction.model';
+
 export interface Account {
   _id: string;
   title: string;
@@ -7,4 +9,5 @@ export interface Account {
     name: string;
     code: string;
   };
+  transactions: Transaction[];
 }
