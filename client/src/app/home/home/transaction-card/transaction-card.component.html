@@ -10,7 +10,7 @@
   </mat-icon>
   <div class="card__category">{{ transaction.category.name }}</div>
   <div class="card__title">{{ transaction.title }}</div>
-  <div class="card__date">{{ formatDate(transaction.transactionDate) }}</div>
+  <div class="card__date">{{ transaction.transactionDate | date }}</div>
   <div
     class="card__amount"
     [ngClass]="{

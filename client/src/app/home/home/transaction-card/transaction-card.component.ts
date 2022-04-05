@@ -12,9 +12,5 @@ export class TransactionCardComponent implements OnInit {
 
   constructor() {}
 
-  public formatDate(date: Date) {
-    return moment(date).format('DD.MM.YYYY');
-  }
-
   ngOnInit(): void {}
 }
