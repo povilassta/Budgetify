@@ -1,3 +1,5 @@
+@use "../../shared/variables" as var
+
 .main
     height: 100%
     display: flex
@@ -29,14 +31,14 @@
     padding: 2rem
 
     &__income
-        background: green
+        background: var.$income-green
         transition: 0.3s
         opacity: 0.3
     &__expense
         opacity: 0.3
         transition: 0.3s
         margin: 1rem
-        background: red
+        background: var.$expense-red
 
 .selected
     opacity: 1
@@ -48,7 +50,7 @@
     button
         margin-right: 2rem
         margin-bottom: 0.5rem
-        background-color: rgba(185,226,230,255)
+        background-color: var.$base-blue
 
 
   

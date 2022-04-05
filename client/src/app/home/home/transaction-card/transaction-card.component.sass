@@ -1,9 +1,11 @@
+@use "../../../shared/variables" as var
+    
 .card
     display: flex
     width: 59.3rem
     height: 2rem
     justify-content: space-between
-    background: white
+    background: var.$base-white
     margin-bottom: 0.4rem
     padding: 0.5rem
     border-radius: 15px
@@ -11,7 +13,7 @@
     line-height: 2rem
     &__category
         width: 5rem
-        background: #d3d3d3
+        background: var.$base-blue
         border-radius: 5px
         text-align: center
         line-height: 2rem
@@ -19,9 +21,9 @@
     &__amount
         font-size: 1rem
         &.income
-            color: green
+            color: var.$income-green
         &.expense
-            color: red
+            color: var.$expense-red
 
 .transaction-icon
     display: flex
@@ -30,9 +32,9 @@
     width: 2rem
     height: 2rem
     border-radius: 50%
-    background-color: green
-    color: white
+    background-color: var.$income-green
+    color: var.$base-white
     &.income
-        background-color: green
+        background-color: var.$income-green
     &.expense 
-        background-color: red
+        background-color: var.$expense-red
