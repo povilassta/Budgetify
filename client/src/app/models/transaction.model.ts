@@ -1,3 +1,5 @@
+import { Category } from './category.model';
+
 export interface Transaction {
   _id: string;
   title: string;
@@ -5,10 +7,5 @@ export interface Transaction {
   transactionDate: Date;
   accountId: string;
   amount: Number;
-  category: {
-    _id: string;
-    name: string;
-    type: string;
-    userId: string;
-  };
+  category: Category;
 }

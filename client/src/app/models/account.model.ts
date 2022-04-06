@@ -1,13 +1,10 @@
+import { Currency } from './currency.model';
 import { Transaction } from './transaction.model';
 
 export interface Account {
   _id: string;
   title: string;
   description: string;
-  currency: {
-    _id: string;
-    name: string;
-    code: string;
-  };
+  currency: Currency;
   transactions: Transaction[];
 }
