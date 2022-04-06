@@ -3,7 +3,9 @@ import { TransactionService } from '../transaction-card/services/transaction.ser
 import { Account } from '../../../models/account.model';
 import { AccountService } from './services/accounts.service';
 import { CommunicationService } from './services/communication.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-account-card',
   templateUrl: './account-card.component.html',
@@ -14,9 +16,12 @@ export class AccountCardComponent implements OnInit {
 
   public onCardClick(): void {
     this.accountService.activateAccount(this.account._id);
-    this.transactionService.getTransactions(this.account._id).subscribe({
-      next: () => this.communicationService.callComponentMethod(), // Update transactions variable in home component
-    });
+    this.transactionService
+      .getTransactions(this.account._id)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => this.communicationService.callComponentMethod(), // Update transactions variable in home component
+      });
   }
 
   constructor(

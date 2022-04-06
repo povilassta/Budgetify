@@ -4,7 +4,9 @@ import { AccountService } from './account-card/services/accounts.service';
 import { TransactionService } from './transaction-card/services/transaction.service';
 import { Transaction } from '../../models/transaction.model';
 import { CommunicationService } from './account-card/services/communication.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -35,17 +37,20 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.accountsService.getAccounts().subscribe({
-      next: (data) => (this.accounts = data),
-      complete: () => {
-        this.transactionService
-          .getTransactions(this.accounts[0]._id)
-          .subscribe({
-            next: (data) => {
-              this.filteredTransactions = data;
-            },
-          });
-      },
-    });
+    this.accountsService
+      .getAccounts()
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (data) => (this.accounts = data),
+        complete: () => {
+          this.transactionService
+            .getTransactions(this.accounts[0]._id)
+            .subscribe({
+              next: (data) => {
+                this.filteredTransactions = data;
+              },
+            });
+        },
+      });
   }
 }
