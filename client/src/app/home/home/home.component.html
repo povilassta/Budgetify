@@ -33,8 +33,7 @@
     </p>
     <app-transaction-card
       *ngFor="
-        let transaction of transactionService.filteredTransactions
-          | searchFilter: value;
+        let transaction of filteredTransactions | searchFilter: value;
         let i = index;
         trackBy: trackBy
       "
@@ -49,7 +48,7 @@
         class="filter-buttons__income"
         mat-mini-fab
         aria-label="income"
-        (click)="transactionService.filterTransactions('income')"
+        (click)="filterTransactions('income')"
       >
         <mat-icon>arrow_downward</mat-icon>
       </button>
@@ -58,7 +57,7 @@
         class="filter-buttons__expense"
         mat-mini-fab
         aria-label="expense"
-        (click)="transactionService.filterTransactions('expense')"
+        (click)="filterTransactions('expense')"
       >
         <mat-icon>arrow_upward</mat-icon>
       </button>

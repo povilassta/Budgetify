@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TransactionService } from '../transaction-card/services/transaction.service';
 import { Account } from '../../../models/account.model';
 import { AccountService } from './services/accounts.service';
+import { CommunicationService } from './services/communication.service';
 
 @Component({
   selector: 'app-account-card',
@@ -13,12 +14,15 @@ export class AccountCardComponent implements OnInit {
 
   public onCardClick(): void {
     this.accountService.activateAccount(this.account._id);
-    this.transactionService.getTransactions(this.account._id).subscribe();
+    this.transactionService.getTransactions(this.account._id).subscribe({
+      next: () => this.communicationService.callComponentMethod(), // Update transactions variable in home component
+    });
   }
 
   constructor(
     public accountService: AccountService,
-    public transactionService: TransactionService
+    public transactionService: TransactionService,
+    private communicationService: CommunicationService
   ) {}
 
   public ngOnInit(): void {
