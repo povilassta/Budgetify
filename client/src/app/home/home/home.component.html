@@ -31,6 +31,15 @@
     >
       You don't have any transactions in this account!
     </p>
+    <p
+      *ngIf="
+        transactionService.transactions.length !== 0 &&
+        filteredTransactions.length === 0
+      "
+      class="main__notransactions"
+    >
+      No transactions match the filters!
+    </p>
     <app-transaction-card
       *ngFor="
         let transaction of filteredTransactions | searchFilter: value;
