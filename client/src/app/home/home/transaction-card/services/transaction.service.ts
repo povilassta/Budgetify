@@ -8,7 +8,6 @@ import { Transaction } from '../../../../models/transaction.model';
 })
 export class TransactionService {
   public transactions!: Transaction[];
-  public filteredTransactions!: Transaction[];
   public isIncomeFilter: boolean = false;
   public isExpenseFilter: boolean = false;
 
@@ -21,37 +20,36 @@ export class TransactionService {
         tap({
           next: (res: any) => {
             this.transactions = res;
-            this.filteredTransactions = res;
           },
         })
       );
   }
 
-  public filterTransactions(type?: string): void {
+  public filterTransactions(type?: string): Transaction[] {
     if (!type) {
-      this.filteredTransactions = this.transactions;
+      this.isIncomeFilter = false;
+      this.isExpenseFilter = false;
+      return this.transactions;
     } else if (type === 'income') {
       this.isExpenseFilter = false;
       if (this.isIncomeFilter) {
         this.isIncomeFilter = false;
-        this.filteredTransactions = this.transactions;
+        return this.transactions;
       } else {
         this.isIncomeFilter = true;
-        this.filteredTransactions = this.transactions.filter(
-          (t) => t.type === 'income'
-        );
+        return this.transactions.filter((t) => t.type === 'income');
       }
     } else if (type === 'expense') {
       this.isIncomeFilter = false;
       if (this.isExpenseFilter) {
         this.isExpenseFilter = false;
-        this.filteredTransactions = this.transactions;
+        return this.transactions;
       } else {
         this.isExpenseFilter = true;
-        this.filteredTransactions = this.transactions.filter(
-          (t) => t.type === 'expense'
-        );
+        return this.transactions.filter((t) => t.type === 'expense');
       }
+    } else {
+      return this.transactions;
     }
   }
 }
