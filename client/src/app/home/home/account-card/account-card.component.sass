@@ -1,0 +1,25 @@
+@use "../../../shared/variables" as var
+    
+.card
+    width: 100%
+    height: 5rem
+    margin: 0.5rem
+    background: rgb(252,126,119)
+    background: linear-gradient(135deg, rgba(252,126,119,1) 43%, rgba(116,162,232,1) 74%)
+    opacity: 0.3
+    transition: 0.3s
+    &__title
+        color: var.$base-white
+        font-size: 1.2rem
+
+    &__amount
+        padding-top: 1rem
+        color: var.$base-white
+        font-size: 2rem
+    
+    &:hover
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 7px 7px
+        opacity: 0.8
+
+.selected
+    opacity: 0.8

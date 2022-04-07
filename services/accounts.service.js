@@ -9,7 +9,9 @@ const AccountsService = {
 
   getAll: async (userId) => {
     try {
-      const accounts = await Account.find({ userId }).populate("currency");
+      const accounts = await Account.find({ userId })
+        .populate("currency")
+        .populate("transactions");
       return accounts;
     } catch (errors) {
       throw errors;

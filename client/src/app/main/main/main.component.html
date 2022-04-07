@@ -1,0 +1,15 @@
+<app-header (menuButtonClicked)="sidenav.toggle()"></app-header>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" role="navigation">
+    <mat-nav-list>
+      <a mat-list-item href="">Categories</a>
+      <a mat-list-item href="">Subscriptions</a>
+      <a mat-list-item href="">Obligatory</a>
+      <a mat-list-item href="">Statistic</a>
+      <a mat-list-item href="">Admin</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

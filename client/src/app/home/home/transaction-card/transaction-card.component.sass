@@ -1,0 +1,43 @@
+@use "../../../shared/variables" as var
+    
+.card
+    display: flex
+    height: 2rem
+    justify-content: space-between
+    border: solid 1px var.$border-grey
+    margin-bottom: 0.4rem
+    padding: 0.5rem
+    border-radius: 15px
+    text-align: center
+    line-height: 2rem
+    transition: 0.3s
+    width: 100%
+    &:hover
+        border-color: black
+    &__category
+        width: 5rem
+        background: var.$base-blue
+        border-radius: 5px
+        text-align: center
+        line-height: 2rem
+
+    &__amount
+        font-size: 1rem
+        &.income
+            color: var.$income-green
+        &.expense
+            color: var.$expense-red
+
+.transaction-icon
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 2rem
+    height: 2rem
+    border-radius: 50%
+    background-color: var.$income-green
+    color: var.$base-white
+    &.income
+        background-color: var.$income-green
+    &.expense 
+        background-color: var.$expense-red

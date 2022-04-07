@@ -7,7 +7,9 @@ const transactionsService = {
   getAll: async (accountId, userId) => {
     try {
       if (await AccountsService.get(accountId, userId)) {
-        const transactions = await Transaction.find({ accountId });
+        const transactions = await Transaction.find({ accountId }).populate(
+          "category"
+        );
         return transactions;
       } else {
         throw new NotFoundError("Account not found");

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Transaction from "./transactions.model.js";
+import transactionService from "../services/transactions.service.js";
 
 const accountSchema = new mongoose.Schema({
   userId: {
@@ -20,6 +21,14 @@ const accountSchema = new mongoose.Schema({
     ref: "Currency",
     required: [true, "Account currency is required."],
   },
+});
+
+accountSchema.set("toJSON", { virtuals: true });
+
+accountSchema.virtual("transactions", {
+  ref: "Transaction",
+  localField: "_id",
+  foreignField: "accountId",
 });
 
 // Middleware: when account is removed, remove its transactions.

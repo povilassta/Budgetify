@@ -1,0 +1,36 @@
+@use "../../shared/variables" as var
+    
+.navbar
+    display: flex
+    justify-content: space-between
+    background: var.$background-grey
+    border-bottom: solid 1px var.$border-grey
+
+    
+.navbar__logo
+    display: flex
+    align-items: center
+
+.navbar__links
+    span
+        padding-right: 1rem
+        font-weight: lighter
+        font-size: medium
+    span:hover
+        color: grey
+
+.navbar__user
+    display: flex
+    align-items: center
+    font-weight: lighter
+    font-size: medium
+    span
+        padding-left: 5px
+
+.menu-button
+    display: block
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: flex-start
+    font-size: 1rem
