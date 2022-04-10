@@ -14,7 +14,6 @@ import { TransactionViewComponent } from './home/transaction-view/transaction-vi
     HomeComponent,
     AccountCardComponent,
     TransactionCardComponent,
-    SearchFilterPipe,
     AddTransactionComponent,
     TransactionViewComponent,
   ],

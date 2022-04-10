@@ -1,0 +1,21 @@
+@use "../../shared/variables" as var
+
+.category-card
+    margin-right: 0.5rem
+    margin-bottom: 0.5rem
+    display: flex
+    border-radius: 10px
+    border: 2px solid var.$expense-red
+    align-items: center
+    padding: 0rem 1rem
+    &__name
+        font-size: 1.2rem
+        padding-right: 0.5rem
+    &__buttons
+        button
+            width: 25px
+
+.income
+    border-color: var.$income-green
+.expense
+    border-color: var.$expense-red

@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { MainModule } from './main/main.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoryCardComponent } from './categories/category-card/category-card.component';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],

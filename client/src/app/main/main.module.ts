@@ -7,6 +7,8 @@ import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
 import { HomeComponent } from '../home/home/home.component';
 import { HomeModule } from '../home/home.module';
+import { CategoriesComponent } from '../categories/categories.component';
+import { CategoriesModule } from '../categories/categories.module';
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent,
       },
     ],
   },
@@ -30,6 +36,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     LayoutModule,
     HomeModule,
+    CategoriesModule,
   ],
 })
 export class MainModule {}

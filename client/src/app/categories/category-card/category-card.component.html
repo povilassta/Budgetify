@@ -1,0 +1,17 @@
+<div
+  [ngClass]="{
+    income: category.type === 'income',
+    expense: category.type === 'expense'
+  }"
+  class="category-card"
+>
+  <div class="category-card__name">{{ category.name | titlecase }}</div>
+  <div class="category-card__buttons">
+    <button mat-icon-button aria-label="edit">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="delete">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

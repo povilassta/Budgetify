@@ -16,9 +16,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SearchFilterPipe } from '../search-filter.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [SearchFilterPipe],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -55,6 +56,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatSelectModule,
     MatDatepickerModule,
     NgSelectModule,
+    SearchFilterPipe,
   ],
 })
 export class SharedModule {}
