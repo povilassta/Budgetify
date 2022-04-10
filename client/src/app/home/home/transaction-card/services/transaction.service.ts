@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { TransactionPost } from 'src/app/models/transaction-post.model';
 import { Transaction } from '../../../../models/transaction.model';
+import { AccountService } from '../../account-card/services/accounts.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,10 @@ export class TransactionService {
   public isIncomeFilter: boolean = false;
   public isExpenseFilter: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService
+  ) {}
 
   public getTransactions(accountId: string): Observable<any> {
     return this.http
@@ -23,6 +28,13 @@ export class TransactionService {
           },
         })
       );
+  }
+
+  public postTransaction(data: TransactionPost): Observable<any> {
+    return this.http.post(
+      `http://localhost:3000/accounts/${this.accountService.activeAccount._id}/transactions`,
+      data
+    );
   }
 
   public filterTransactions(type?: string): Transaction[] {

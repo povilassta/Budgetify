@@ -8,7 +8,7 @@ const transactionsService = {
     try {
       if (await AccountsService.get(accountId, userId)) {
         const transactions = await Transaction.find({ accountId }).populate(
-          "category"
+          "categories"
         );
         return transactions;
       } else {
@@ -51,21 +51,21 @@ const transactionsService = {
   insert: async (data, accountId, userId) => {
     try {
       if (await AccountsService.get(accountId, userId)) {
-        const category = await CategoryService.getByNameType(
-          data.category,
-          data.type,
-          userId
-        );
+        // const category = await CategoryService.getByNameType(
+        //   data.category,
+        //   data.type,
+        //   userId
+        // );
 
-        if (category) {
-          data.category = category._id;
-        } else {
-          const newCategory = await CategoryService.insert(
-            { name: data.category, type: data.type },
-            userId
-          );
-          data.category = newCategory._id;
-        }
+        // if (category) {
+        //   data.category = category._id;
+        // } else {
+        //   const newCategory = await CategoryService.insert(
+        //     { name: data.category, type: data.type },
+        //     userId
+        //   );
+        //   data.category = newCategory._id;
+        // }
 
         const transaction = await Transaction.create({ ...data, accountId });
 

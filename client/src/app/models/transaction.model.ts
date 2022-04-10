@@ -7,5 +7,7 @@ export interface Transaction {
   transactionDate: Date;
   accountId: string;
   amount: Number;
-  category: Category;
+  categories: Category[];
+  payee: string;
+  description: string;
 }

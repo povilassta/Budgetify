@@ -47,6 +47,7 @@
         trackBy: trackBy
       "
       [transaction]="transaction"
+      (click)="createTransactionViewOverlay(transaction)"
     ></app-transaction-card>
   </div>
 
@@ -72,7 +73,7 @@
       </button>
     </div>
     <div class="add-buttons">
-      <button mat-flat-button>
+      <button mat-flat-button (click)="createTransactionCreateOverlay()">
         <mat-icon>add_circle</mat-icon> Add transaction
       </button>
       <button mat-flat-button>

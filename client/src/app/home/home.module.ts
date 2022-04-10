@@ -6,6 +6,8 @@ import { AccountCardComponent } from './home/account-card/account-card.component
 import { TransactionCardComponent } from './home/transaction-card/transaction-card.component';
 import { FormsModule } from '@angular/forms';
 import { SearchFilterPipe } from '../search-filter.pipe';
+import { AddTransactionComponent } from './home/add-transaction/add-transaction.component';
+import { TransactionViewComponent } from './home/transaction-view/transaction-view.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { SearchFilterPipe } from '../search-filter.pipe';
     AccountCardComponent,
     TransactionCardComponent,
     SearchFilterPipe,
+    AddTransactionComponent,
+    TransactionViewComponent,
   ],
   imports: [CommonModule, SharedModule, FormsModule],
 })

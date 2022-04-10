@@ -11,6 +11,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [],
@@ -27,6 +32,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatMenuModule,
     MatCardModule,
     MatGridListModule,
+    OverlayModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    NgSelectModule,
   ],
   exports: [
     MatButtonModule,
@@ -40,6 +50,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatMenuModule,
     MatCardModule,
     MatGridListModule,
+    OverlayModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    NgSelectModule,
   ],
 })
 export class SharedModule {}

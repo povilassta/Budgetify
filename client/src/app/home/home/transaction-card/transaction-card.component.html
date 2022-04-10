@@ -8,7 +8,9 @@
   >
     {{ transaction.type === 'income' ? 'arrow_downward' : 'arrow_upward' }}
   </mat-icon>
-  <div class="card__category">{{ transaction.category.name | titlecase }}</div>
+  <div class="card__category">
+    {{ transaction.categories[0].name | titlecase }}
+  </div>
   <div class="card__title">{{ transaction.title | titlecase }}</div>
   <div class="card__date">{{ transaction.transactionDate | date }}</div>
   <div
