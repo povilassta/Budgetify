@@ -1,6 +1,7 @@
 @use "../shared/variables" as var
 
 .categories
+    margin-top: 1rem
     display: flex
     padding: 1rem
     &__main
@@ -18,8 +19,7 @@
         
         
 .filter-buttons
-    padding-right: 0.5rem
-
+    padding-right: 1.5rem
     &__income
         background: var.$income-green
         transition: 0.3s
@@ -38,6 +38,8 @@
     opacity: 1
 
 .add-buttons
+    padding-top: 1rem
+    padding-right: 1rem
     button
         background-color: var.$base-blue
         transition: 0.3s
