@@ -1,0 +1,62 @@
+@use "../../../shared/variables" as var
+
+.transaction
+    background: var.$background-grey
+    height: 100%
+    width: 30rem
+    padding: 2rem 1.5rem
+    &__header
+        display: flex
+        justify-content: space-between
+    &__type-amount
+        display: flex
+        justify-content: space-between
+        padding: 2rem 0rem
+        &__type
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 3rem
+            height: 3rem
+            border-radius: 50%
+            background-color: var.$income-green
+            color: var.$base-white
+            &.income
+                background-color: var.$income-green
+            &.expense 
+                background-color: var.$expense-red
+        &__amount
+            font-size: 3rem
+            padding: 1rem 0rem
+            &.income
+                color: var.$income-green
+            &.expense
+                color: var.$expense-red
+    &__title
+        font-size: 1.5rem
+    &__categories
+        padding-top: 1rem
+        display: flex
+        flex-wrap: wrap
+        &__category
+            margin-right: 0.3rem
+            margin-bottom: 0.2rem
+            height: 1.2rem
+            padding: 0.5rem
+            border-radius: 15px
+            background: var.$base-blue
+    &__data
+        padding: 2rem 1rem
+        &__tile
+            width: 100%
+            height: 100%
+            justify-content: start
+            align-items: center
+    &__buttons
+        display: flex
+        justify-content: end
+        align-items: end
+        transition: 0.3s
+        button
+            &:hover
+                color: var.$expense-red
