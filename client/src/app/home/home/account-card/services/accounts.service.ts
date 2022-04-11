@@ -30,4 +30,16 @@ export class AccountService {
   public getActiveAccountCurrency(): string {
     return this.activeAccount.currency.code;
   }
+
+  public calculateBalance(account: Account) {
+    let sum = 0;
+    for (let transaction of account.transactions) {
+      if (transaction.type === 'income') {
+        sum += transaction.amount.valueOf();
+      } else if (transaction.type === 'expense') {
+        sum -= transaction.amount.valueOf();
+      }
+    }
+    return sum;
+  }
 }

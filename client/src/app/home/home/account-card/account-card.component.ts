@@ -4,6 +4,13 @@ import { Account } from '../../../models/account.model';
 import { AccountService } from './services/accounts.service';
 import { CommunicationService } from './services/communication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+  Overlay,
+  OverlayPositionBuilder,
+  OverlayRef,
+} from '@angular/cdk/overlay';
+import { AccountViewComponent } from '../account-view/account-view.component';
+import { ComponentPortal } from '@angular/cdk/portal';
 
 @UntilDestroy()
 @Component({
@@ -13,6 +20,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class AccountCardComponent implements OnInit {
   @Input() public account!: Account;
+  private overlayRef!: OverlayRef;
 
   public onCardClick(): void {
     this.accountService.activateAccount(this.account._id);
@@ -27,8 +35,14 @@ export class AccountCardComponent implements OnInit {
   constructor(
     public accountService: AccountService,
     public transactionService: TransactionService,
-    private communicationService: CommunicationService
-  ) {}
+    private communicationService: CommunicationService,
+    private overlay: Overlay,
+    private positionBuilder: OverlayPositionBuilder
+  ) {
+    this.communicationService.overlayCloseCalled$.subscribe(() => {
+      this.closeOverlay();
+    });
+  }
 
   public ngOnInit(): void {
     const firstAccount = this.accountService.accounts[0];
@@ -45,5 +59,21 @@ export class AccountCardComponent implements OnInit {
       }
     }
     return sum;
+  }
+
+  public createAccountViewOverlay(account: Account): void {
+    this.overlayRef = this.overlay.create({
+      height: '100%',
+      hasBackdrop: true,
+      positionStrategy: this.positionBuilder.global().top().right(),
+    });
+    const overlayPortal = new ComponentPortal(AccountViewComponent);
+    const componentRef = this.overlayRef.attach(overlayPortal);
+    componentRef.instance.account = account;
+    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+  }
+
+  public closeOverlay(): void {
+    if (this.overlayRef.hasAttached()) this.overlayRef.detach();
   }
 }

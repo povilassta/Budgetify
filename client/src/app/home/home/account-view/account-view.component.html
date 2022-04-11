@@ -1,0 +1,48 @@
+<div class="account">
+  <div class="account__header">
+    <h1>Account Information</h1>
+    <div class="account__header__buttons">
+      <button mat-icon-button aria-label="edit">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="delete">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="exit" (click)="callCloseOverlay()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="account__info">
+    <div class="account__info__row">
+      <div class="account__info__row__first">Title:</div>
+      <div class="account__info__row__second">
+        {{ account.title | titlecase }}
+      </div>
+    </div>
+    <div class="account__info__row">
+      <div class="account__info__row__first">Balance:</div>
+      <div class="account__info__row__second">
+        {{
+          accountService.calculateBalance(account)
+            | currency: account.currency.code
+        }}
+      </div>
+    </div>
+    <div class="account__info__row">
+      <div class="account__info__row__first">Currency:</div>
+      <div class="account__info__row__second">
+        {{ account.currency.name }}
+      </div>
+    </div>
+    <div class="account__info__row">
+      <div class="account__info__row__first">Description:</div>
+      <div class="account__info__row__second">
+        {{ account.description ? account.description : '-' }}
+      </div>
+    </div>
+  </div>
+  <div class="account__buttons">
+    <button mat-button (click)="callCloseOverlay()">Close</button>
+  </div>
+</div>

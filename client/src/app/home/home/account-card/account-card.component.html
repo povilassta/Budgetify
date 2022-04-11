@@ -5,7 +5,11 @@
 >
   <div class="card__header">
     <p>{{ account.title }}</p>
-    <button mat-icon-button aria-label="account details">
+    <button
+      mat-icon-button
+      aria-label="account details"
+      (click)="createAccountViewOverlay(account)"
+    >
       <mat-icon>info</mat-icon>
     </button>
   </div>

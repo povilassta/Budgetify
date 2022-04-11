@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
   }
 
   public closeOverlay(): void {
-    this.overlayRef.detach();
+    if (this.overlayRef.hasAttached()) this.overlayRef.detach();
   }
 
   public ngOnInit(): void {
