@@ -5,15 +5,15 @@
         <mat-icon>menu</mat-icon>
       </button>
     </span>
-    <span>Bugetify</span>
+    <a (click)="navigateHome()">Bugetify</a>
   </div>
   <ng-container *ngIf="isWideScreen$ | async">
     <div class="navbar__links">
-      <span>Categories</span>
-      <span>Subscriptions</span>
-      <span>Obligatory</span>
-      <span>Statistic</span>
-      <span>Admin</span>
+      <a (click)="navigateToCategories()">Categories</a>
+      <a>Subscriptions</a>
+      <a>Obligatory</a>
+      <a>Statistic</a>
+      <a>Admin</a>
     </div>
   </ng-container>
   <div class="navbar__user" mat-button [matMenuTriggerFor]="menu">

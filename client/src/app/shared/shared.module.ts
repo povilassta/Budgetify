@@ -15,7 +15,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { SearchFilterPipe } from '../search-filter.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -38,7 +37,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgSelectModule,
     MatDialogModule,
   ],
   exports: [
@@ -57,7 +55,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgSelectModule,
     SearchFilterPipe,
     MatDialogModule,
   ],
