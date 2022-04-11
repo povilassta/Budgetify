@@ -49,32 +49,24 @@
     </div>
   </div>
   <div class="transaction__data">
-    <mat-grid-list cols="2" rowHeight="6:1">
-      <mat-grid-tile
-        ><div class="transaction__data__tile">Payment Date:</div></mat-grid-tile
-      >
-      <mat-grid-tile
-        ><div class="transaction__data__tile">
-          {{ transaction.transactionDate | date }}
-        </div></mat-grid-tile
-      >
-      <mat-grid-tile
-        ><div class="transaction__data__tile">Payee</div></mat-grid-tile
-      >
-      <mat-grid-tile
-        ><div class="transaction__data__tile">
-          {{ transaction.payee ? transaction.payee : '-' }}
-        </div></mat-grid-tile
-      >
-      <mat-grid-tile
-        ><div class="transaction__data__tile">Description:</div></mat-grid-tile
-      >
-      <mat-grid-tile
-        ><div class="transaction__data__tile">
-          {{ transaction.description ? transaction.description : '-' }}
-        </div></mat-grid-tile
-      >
-    </mat-grid-list>
+    <div class="transaction__data__row">
+      <div class="transaction__data__row__first">Payment date:</div>
+      <div class="transaction__data__row__second">
+        {{ transaction.transactionDate | date }}
+      </div>
+    </div>
+    <div class="transaction__data__row">
+      <div class="transaction__data__row__first">Payee:</div>
+      <div class="transaction__data__row__second">
+        {{ transaction.payee ? transaction.payee : '-' }}
+      </div>
+    </div>
+    <div class="transaction__data__row">
+      <div class="transaction__data__row__first">Description:</div>
+      <div class="transaction__data__row__second">
+        {{ transaction.description ? transaction.description : '-' }}
+      </div>
+    </div>
   </div>
   <div class="transaction__buttons">
     <button mat-button (click)="callCloseOverlay()">Close</button>

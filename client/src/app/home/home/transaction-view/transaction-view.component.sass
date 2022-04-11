@@ -34,6 +34,7 @@
                 color: var.$expense-red
     &__title
         font-size: 1.5rem
+        font-weight: 500
     &__categories
         padding-top: 1rem
         display: flex
@@ -46,12 +47,17 @@
             border-radius: 15px
             background: var.$base-blue
     &__data
-        padding: 2rem 1rem
-        &__tile
-            width: 100%
-            height: 100%
-            justify-content: start
-            align-items: center
+        padding: 2rem 0rem
+        &__row
+            display: flex
+            padding: 1rem 0rem
+            font-size: 1.2rem
+            border-bottom: 1px solid var.$border-grey
+            &__first
+                width: 30%
+                font-weight: 500
+            &__second
+                width: 75%
     &__buttons
         display: flex
         justify-content: end
