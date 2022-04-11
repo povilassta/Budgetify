@@ -1,0 +1,57 @@
+<div class="category-form">
+  <div class="category-form__header">
+    <h1>Add Category</h1>
+    <button
+      mat-icon-button
+      aria-label="exit form button"
+      (click)="closeOverlay()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="category-form__types">
+    <button
+      mat-flat-button
+      [ngClass]="{ active: isExpense }"
+      (click)="isExpense = true"
+      class="category-form__types__expense"
+    >
+      <mat-icon>arrow_upward</mat-icon> Expenses
+    </button>
+    <button
+      mat-flat-button
+      [ngClass]="{ active: !isExpense }"
+      (click)="isExpense = false"
+      class="category-form__types__income"
+    >
+      <mat-icon>arrow_downward</mat-icon> Income
+    </button>
+  </div>
+  <div class="category-form__fields">
+    <form [formGroup]="categoryForm" (ngSumbit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" />
+      </mat-form-field>
+      <div class="category-form__fields__buttons">
+        <button
+          color="basic"
+          mat-flat-button
+          class="category-form__fields__buttons__cancel"
+          (click)="closeOverlay()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          color="basic"
+          [disabled]="categoryForm.invalid"
+          mat-flat-button
+          class="category-form__fields__buttons__save"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
