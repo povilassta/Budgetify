@@ -1,10 +1,15 @@
-<mat-card
+<div
   (click)="onCardClick()"
   [ngClass]="{ selected: account._id === accountService.activeAccount?._id }"
   class="card"
 >
-  <mat-card-subtitle class="card__title">{{ account.title }}</mat-card-subtitle>
-  <mat-card-title class="card__amount"
-    >{{ calculateBalance(account) }} {{ account.currency.code }}</mat-card-title
-  >
-</mat-card>
+  <div class="card__header">
+    <p>{{ account.title }}</p>
+    <button mat-icon-button aria-label="account details">
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
+  <div class="card__amount">
+    {{ calculateBalance(account) | currency: account.currency.code }}
+  </div>
+</div>
