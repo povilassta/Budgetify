@@ -8,8 +8,12 @@ import { Category } from 'src/app/models/category.model';
 })
 export class CategoryCardComponent implements OnInit {
   @Input() category!: Category;
+  public isEditingMode: boolean = false;
+  public categoryName!: string;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categoryName = this.category.name;
+  }
 }

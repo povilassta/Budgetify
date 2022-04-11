@@ -5,10 +5,32 @@
   }"
   class="category-card"
 >
-  <div class="category-card__name">{{ category.name | titlecase }}</div>
+  <div class="category-card__name">
+    <div *ngIf="!isEditingMode">{{ category.name | titlecase }}</div>
+    <mat-form-field
+      *ngIf="isEditingMode"
+      class="categories-card__name__input"
+      appearance="legacy"
+    >
+      <input matInput type="text" [(ngModel)]="categoryName" />
+    </mat-form-field>
+  </div>
   <div class="category-card__buttons">
-    <button mat-icon-button aria-label="edit">
+    <button
+      *ngIf="!isEditingMode"
+      mat-icon-button
+      aria-label="edit"
+      (click)="isEditingMode = true"
+    >
       <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      *ngIf="isEditingMode"
+      mat-icon-button
+      aria-label="done"
+      (click)="isEditingMode = false"
+    >
+      <mat-icon>done</mat-icon>
     </button>
     <button mat-icon-button aria-label="delete">
       <mat-icon>delete</mat-icon>
