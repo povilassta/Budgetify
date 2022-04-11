@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { AccountPost } from 'src/app/models/account-post.model';
 import { Account } from '../../../../models/account.model';
 
 @Injectable({
@@ -20,6 +21,14 @@ export class AccountService {
         },
       })
     );
+  }
+
+  public postAccount(data: AccountPost): Observable<any> {
+    return this.http.post('http://localhost:3000/accounts', data);
+  }
+
+  public deleteAccount(accountId: string): Observable<any> {
+    return this.http.delete(`http://localhost:3000/accounts/${accountId}`);
   }
 
   public activateAccount(id: string): void {

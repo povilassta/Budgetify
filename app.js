@@ -5,6 +5,7 @@ import accountsRouter from "./routes/accounts.route.js";
 import categoriesRouter from "./routes/categories.route.js";
 import authRouter from "./routes/auth.route.js";
 import errorHandler from "./middleware/errorHandler.middleware.js";
+import currencyRouter from "./routes/currency.route.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 //Routes
 app.use("/accounts", accountsRouter);
 app.use("/categories", categoriesRouter);
+app.use("/currency", currencyRouter);
 app.use("/", authRouter);
 
 app.use(errorHandler);

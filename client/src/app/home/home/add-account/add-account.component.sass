@@ -1,0 +1,32 @@
+@use "../../../shared/variables" as var
+
+.account-form
+    width: 30rem
+    height: 100%
+    background: var.$background-grey
+    padding: 2rem 1rem
+    &__header
+        display: flex
+        justify-content: space-between
+    
+    &__inputs
+        padding-top: 2rem
+        form
+            display: flex
+            flex-direction: column
+        &__description
+            textarea
+                height: 10rem
+                resize: none
+        &__buttons
+            display: flex
+            justify-content: end
+            button
+                margin-left: 1rem
+            &__cancel
+                background: var.$background-grey
+                transition: 0.3s
+                &:hover
+                    color: var.$expense-red
+            &__save
+                background: var.$base-blue

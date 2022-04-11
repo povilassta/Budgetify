@@ -9,6 +9,8 @@ import { SearchFilterPipe } from '../search-filter.pipe';
 import { AddTransactionComponent } from './home/add-transaction/add-transaction.component';
 import { TransactionViewComponent } from './home/transaction-view/transaction-view.component';
 import { AccountViewComponent } from './home/account-view/account-view.component';
+import { AddAccountComponent } from './home/add-account/add-account.component';
+import { AccountDeleteDialogComponent } from './home/account-view/account-delete-dialog/account-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { AccountViewComponent } from './home/account-view/account-view.component
     AddTransactionComponent,
     TransactionViewComponent,
     AccountViewComponent,
+    AddAccountComponent,
+    AccountDeleteDialogComponent,
   ],
   imports: [CommonModule, SharedModule, FormsModule],
 })

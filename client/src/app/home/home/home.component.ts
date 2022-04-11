@@ -13,6 +13,7 @@ import {
 import { ComponentPortal } from '@angular/cdk/portal';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { TransactionViewComponent } from './transaction-view/transaction-view.component';
+import { AddAccountComponent } from './add-account/add-account.component';
 
 @UntilDestroy()
 @Component({
@@ -71,6 +72,17 @@ export class HomeComponent implements OnInit {
     const overlayPortal = new ComponentPortal(TransactionViewComponent);
     const componentRef = this.overlayRef.attach(overlayPortal);
     componentRef.instance.transaction = transaction; // pass transaction data to overlay
+    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+  }
+
+  public createAccountCreateOverlay(): void {
+    this.overlayRef = this.overlay.create({
+      height: '100%',
+      hasBackdrop: true,
+      positionStrategy: this.positionBuilder.global().top().right(),
+    });
+    const overlayPortal = new ComponentPortal(AddAccountComponent);
+    this.overlayRef.attach(overlayPortal);
     this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
   }
 

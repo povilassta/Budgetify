@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Account } from 'src/app/models/account.model';
 import { AccountService } from '../account-card/services/accounts.service';
 import { CommunicationService } from '../account-card/services/communication.service';
@@ -13,12 +14,15 @@ export class AccountViewComponent implements OnInit {
 
   constructor(
     public accountService: AccountService,
-    private communicationService: CommunicationService
+    private communicationService: CommunicationService,
+    public dialog: MatDialog
   ) {}
 
   public callCloseOverlay(): void {
     this.communicationService.callCloseOverlay();
   }
+
+  public openDeleteDialog(): void {}
 
   ngOnInit(): void {}
 }

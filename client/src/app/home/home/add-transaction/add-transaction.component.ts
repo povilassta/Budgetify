@@ -89,7 +89,6 @@ export class AddTransactionComponent implements OnInit {
       this.transactionForm.value;
     const categoryIds = categories.map((c: Category) => c._id);
     const type = this.isExpense ? 'expense' : 'income';
-    console.log(categoryIds);
     this.transactionService
       .postTransaction({
         title,
@@ -106,6 +105,7 @@ export class AddTransactionComponent implements OnInit {
           .then(() => {
             this.router.navigate(['/']);
           });
+        this.closeOverlay();
       });
   }
 }

@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SearchFilterPipe } from '../search-filter.pipe';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [SearchFilterPipe],
@@ -38,6 +39,7 @@ import { SearchFilterPipe } from '../search-filter.pipe';
     MatSelectModule,
     MatDatepickerModule,
     NgSelectModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -57,6 +59,7 @@ import { SearchFilterPipe } from '../search-filter.pipe';
     MatDatepickerModule,
     NgSelectModule,
     SearchFilterPipe,
+    MatDialogModule,
   ],
 })
 export class SharedModule {}
