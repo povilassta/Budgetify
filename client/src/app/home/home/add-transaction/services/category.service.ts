@@ -22,6 +22,12 @@ export class CategoryService {
     );
   }
 
+  public updateCategory(name: string, categoryId: string): Observable<any> {
+    return this.http.patch(`http://localhost:3000/categories/${categoryId}`, {
+      name,
+    });
+  }
+
   public filterCategories(type?: string): Category[] {
     if (!type) {
       this.isIncomeFilter = false;

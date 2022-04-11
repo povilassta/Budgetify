@@ -26,9 +26,10 @@
     </button>
     <button
       *ngIf="isEditingMode"
+      [disabled]="categoryName === ''"
       mat-icon-button
       aria-label="done"
-      (click)="isEditingMode = false"
+      (click)="updateCategory()"
     >
       <mat-icon>done</mat-icon>
     </button>
