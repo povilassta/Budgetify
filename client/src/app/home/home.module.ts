@@ -11,6 +11,7 @@ import { TransactionViewComponent } from './home/transaction-view/transaction-vi
 import { AccountViewComponent } from './home/account-view/account-view.component';
 import { AddAccountComponent } from './home/add-account/add-account.component';
 import { AccountDeleteDialogComponent } from './home/account-view/account-delete-dialog/account-delete-dialog.component';
+import { TransactionDeleteDialogComponent } from './home/transaction-view/transaction-delete-dialog/transaction-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AccountDeleteDialogComponent } from './home/account-view/account-delete
     AccountViewComponent,
     AddAccountComponent,
     AccountDeleteDialogComponent,
+    TransactionDeleteDialogComponent,
   ],
   imports: [CommonModule, SharedModule, FormsModule],
 })

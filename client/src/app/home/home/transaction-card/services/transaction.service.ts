@@ -37,6 +37,12 @@ export class TransactionService {
     );
   }
 
+  public deleteTransaction(transactionId: string) {
+    return this.http.delete(
+      `http://localhost:3000/accounts/${this.accountService.activeAccount._id}/transactions/${transactionId}`
+    );
+  }
+
   public filterTransactions(type?: string): Transaction[] {
     if (!type) {
       this.isIncomeFilter = false;

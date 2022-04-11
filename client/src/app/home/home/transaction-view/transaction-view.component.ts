@@ -3,6 +3,8 @@ import { Transaction } from 'src/app/models/transaction.model';
 import { AccountService } from '../account-card/services/accounts.service';
 import { Category } from '../../../models/category.model';
 import { CommunicationService } from '../account-card/services/communication.service';
+import { TransactionDeleteDialogComponent } from './transaction-delete-dialog/transaction-delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transaction-view',
@@ -14,7 +16,8 @@ export class TransactionViewComponent implements OnInit {
 
   constructor(
     public accountService: AccountService,
-    public communicationService: CommunicationService
+    public communicationService: CommunicationService,
+    public dialog: MatDialog
   ) {}
 
   public trackBy(item: Category): string {
@@ -23,6 +26,12 @@ export class TransactionViewComponent implements OnInit {
 
   public callCloseOverlay(): void {
     this.communicationService.callCloseOverlay();
+  }
+
+  public openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(TransactionDeleteDialogComponent, {
+      data: this.transaction,
+    });
   }
 
   ngOnInit(): void {}
