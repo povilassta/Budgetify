@@ -61,7 +61,8 @@ export class AccountCardComponent implements OnInit {
     return sum;
   }
 
-  public createAccountViewOverlay(account: Account): void {
+  public createAccountViewOverlay($event: MouseEvent, account: Account): void {
+    $event.stopPropagation();
     this.overlayRef = this.overlay.create({
       height: '100%',
       hasBackdrop: true,
