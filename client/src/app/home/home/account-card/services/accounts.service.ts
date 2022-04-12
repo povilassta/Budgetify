@@ -8,13 +8,14 @@ import { Account } from '../../../../models/account.model';
   providedIn: 'root',
 })
 export class AccountService {
+  private BASE_URL: string = 'http://localhost:3000/accounts/';
   public accounts: Account[] = [];
   public activeAccount: Account = this.accounts[0];
 
   constructor(private http: HttpClient) {}
 
   public getAccounts(): Observable<Account[]> {
-    return this.http.get('http://localhost:3000/accounts').pipe(
+    return this.http.get(this.BASE_URL).pipe(
       tap({
         next: (res: any) => {
           this.accounts = res;
@@ -24,11 +25,11 @@ export class AccountService {
   }
 
   public postAccount(data: AccountPost): Observable<any> {
-    return this.http.post('http://localhost:3000/accounts', data);
+    return this.http.post(this.BASE_URL, data);
   }
 
   public deleteAccount(accountId: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/accounts/${accountId}`);
+    return this.http.delete(`${this.BASE_URL}${accountId}`);
   }
 
   public activateAccount(id: string): void {

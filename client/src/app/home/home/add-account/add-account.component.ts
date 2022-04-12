@@ -31,14 +31,15 @@ export class AddAccountComponent implements OnInit {
   public callCloseOverlay(): void {
     this.communicationService.callCloseOverlay();
   }
-  ngOnInit(): void {
+
+  public ngOnInit(): void {
     this.currencyService
       .getCurrencies()
       .pipe(untilDestroyed(this))
       .subscribe({ next: (data) => (this.currencies = data) });
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     const { title, currency, description } = this.accountForm.value;
     this.accountService
       .postAccount({ title, currency: currency._id, description })

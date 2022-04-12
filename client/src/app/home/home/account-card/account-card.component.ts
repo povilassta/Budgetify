@@ -39,9 +39,11 @@ export class AccountCardComponent implements OnInit {
     private overlay: Overlay,
     private positionBuilder: OverlayPositionBuilder
   ) {
-    this.communicationService.overlayCloseCalled$.subscribe(() => {
-      this.closeOverlay();
-    });
+    this.communicationService.overlayCloseCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.closeOverlay();
+      });
   }
 
   public ngOnInit(): void {
@@ -71,7 +73,10 @@ export class AccountCardComponent implements OnInit {
     const overlayPortal = new ComponentPortal(AccountViewComponent);
     const componentRef = this.overlayRef.attach(overlayPortal);
     componentRef.instance.account = account;
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    this.overlayRef
+      .backdropClick()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.overlayRef.detach());
   }
 
   public closeOverlay(): void {

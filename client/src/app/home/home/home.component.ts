@@ -60,7 +60,10 @@ export class HomeComponent implements OnInit {
     });
     const overlayPortal = new ComponentPortal(AddTransactionComponent);
     this.overlayRef.attach(overlayPortal);
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    this.overlayRef
+      .backdropClick()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.overlayRef.detach());
   }
 
   public createTransactionViewOverlay(transaction: Transaction): void {

@@ -34,13 +34,17 @@ export class CategoriesComponent implements OnInit {
     private positionBuilder: OverlayPositionBuilder,
     private communicationService: CommunicationService
   ) {
-    this.communicationService.overlayCloseCalled$.subscribe(() => {
-      this.closeOverlay();
-    });
+    this.communicationService.overlayCloseCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.closeOverlay();
+      });
   }
 
   public closeOverlay(): void {
-    if (this.overlayRef.hasAttached()) this.overlayRef.detach();
+    if (this.overlayRef.hasAttached()) {
+      this.overlayRef.detach();
+    }
   }
 
   public filterCategories(type?: string): void {
@@ -55,7 +59,10 @@ export class CategoriesComponent implements OnInit {
     });
     const overlayPortal = new ComponentPortal(AddCategoryComponent);
     this.overlayRef.attach(overlayPortal);
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    this.overlayRef
+      .backdropClick()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.overlayRef.detach());
   }
 
   ngOnInit(): void {

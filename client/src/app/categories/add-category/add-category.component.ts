@@ -14,11 +14,11 @@ export class AddCategoryComponent implements OnInit {
   public isExpense: boolean = true;
   constructor(private communicationService: CommunicationService) {}
 
-  public closeOverlay() {
+  public closeOverlay(): void {
     this.communicationService.callCloseOverlay();
   }
 
-  public onSubmit() {}
+  public onSubmit(): void {}
 
   ngOnInit(): void {}
 }

@@ -50,7 +50,7 @@ export class AddTransactionComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.categoryService
       .getCategories()
       .pipe(untilDestroyed(this))
@@ -62,15 +62,15 @@ export class AddTransactionComponent implements OnInit {
       });
   }
 
-  public trackBy(item: Category) {
+  public trackBy(item: Category): string {
     return item._id;
   }
 
-  public closeOverlay() {
+  public closeOverlay(): void {
     this.communicationService.callCloseOverlay();
   }
 
-  public changeType(type: string) {
+  public changeType(type: string): void {
     if (type === 'expense') {
       this.isExpense = true;
       this.categories = this.categoryService.categories.filter(
@@ -84,7 +84,7 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     const { title, amount, categories, transactionDate, payee, description } =
       this.transactionForm.value;
     const categoryIds = categories.map((c: Category) => c._id);

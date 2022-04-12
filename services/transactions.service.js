@@ -51,24 +51,7 @@ const transactionsService = {
   insert: async (data, accountId, userId) => {
     try {
       if (await AccountsService.get(accountId, userId)) {
-        // const category = await CategoryService.getByNameType(
-        //   data.category,
-        //   data.type,
-        //   userId
-        // );
-
-        // if (category) {
-        //   data.category = category._id;
-        // } else {
-        //   const newCategory = await CategoryService.insert(
-        //     { name: data.category, type: data.type },
-        //     userId
-        //   );
-        //   data.category = newCategory._id;
-        // }
-
         const transaction = await Transaction.create({ ...data, accountId });
-
         return transaction;
       } else {
         throw new NotFoundError("Account not found");
