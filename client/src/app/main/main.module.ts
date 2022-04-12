@@ -9,6 +9,8 @@ import { HomeComponent } from '../home/home/home.component';
 import { HomeModule } from '../home/home.module';
 import { CategoriesComponent } from '../categories/categories.component';
 import { CategoriesModule } from '../categories/categories.module';
+import { StatisticsComponent } from '../statistics/statistics/statistics.component';
+import { StatisticsModule } from '../statistics/statistics.module';
 
 const routes: Routes = [
   {
@@ -24,6 +26,10 @@ const routes: Routes = [
         path: 'categories',
         component: CategoriesComponent,
       },
+      {
+        path: 'statistics',
+        component: StatisticsComponent,
+      },
     ],
   },
 ];
@@ -37,6 +43,7 @@ const routes: Routes = [
     LayoutModule,
     HomeModule,
     CategoriesModule,
+    StatisticsModule,
   ],
 })
 export class MainModule {}

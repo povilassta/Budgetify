@@ -26,5 +26,6 @@ import { TransactionDeleteDialogComponent } from './home/transaction-view/transa
     TransactionDeleteDialogComponent,
   ],
   imports: [CommonModule, SharedModule, FormsModule],
+  exports: [AccountCardComponent],
 })
 export class HomeModule {}

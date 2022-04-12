@@ -38,4 +38,8 @@ export class HeaderComponent implements OnInit {
   public navigateHome(): void {
     this.router.navigateByUrl('/');
   }
+
+  public navigateToStatistics(): void {
+    this.router.navigateByUrl('/statistics');
+  }
 }

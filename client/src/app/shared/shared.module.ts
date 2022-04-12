@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +16,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SearchFilterPipe } from '../search-filter.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [SearchFilterPipe],
@@ -38,6 +41,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatTabsModule,
+    MatMomentDateModule,
+    MatTableModule,
   ],
   exports: [
     MatButtonModule,
@@ -57,6 +63,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDatepickerModule,
     SearchFilterPipe,
     MatDialogModule,
+    MatTabsModule,
+    MatMomentDateModule,
+    MatTableModule,
   ],
 })
 export class SharedModule {}
