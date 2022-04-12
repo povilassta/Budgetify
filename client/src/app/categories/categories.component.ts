@@ -39,6 +39,12 @@ export class CategoriesComponent implements OnInit {
       .subscribe(() => {
         this.closeOverlay();
       });
+
+    this.communicationService.updateValuesCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.updateValues();
+      });
   }
 
   public closeOverlay(): void {
@@ -65,12 +71,16 @@ export class CategoriesComponent implements OnInit {
       .subscribe(() => this.overlayRef.detach());
   }
 
-  ngOnInit(): void {
+  public updateValues(): void {
     this.categoryService
       .getCategories()
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (data) => (this.categories = data),
       });
+  }
+
+  public ngOnInit(): void {
+    this.updateValues();
   }
 }

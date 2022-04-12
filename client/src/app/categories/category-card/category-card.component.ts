@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CommunicationService } from 'src/app/home/home/account-card/services/communication.service';
 import { CategoryService } from 'src/app/home/home/add-transaction/services/category.service';
 import { Category } from 'src/app/models/category.model';
 
@@ -17,7 +18,7 @@ export class CategoryCardComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private router: Router
+    private communicationService: CommunicationService
   ) {}
 
   public ngOnInit(): void {
@@ -30,11 +31,7 @@ export class CategoryCardComponent implements OnInit {
       .updateCategory(this.categoryName, this.category._id)
       .pipe(untilDestroyed(this))
       .subscribe((data: any) => {
-        this.router
-          .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/categories']);
-          });
+        this.communicationService.callUpdateValues();
       });
   }
 }
