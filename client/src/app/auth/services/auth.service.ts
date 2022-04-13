@@ -8,11 +8,12 @@ import { LoginType } from '../interfaces/logintype.interface';
   providedIn: 'root',
 })
 export class AuthService {
+  private BASE_URL: string = 'http://localhost:3000/login/';
   constructor(private http: HttpClient) {}
 
   public login(email: string, password: string): Observable<any> {
     return this.http
-      .post<LoginType>('http://localhost:3000/login', { email, password })
+      .post<LoginType>(this.BASE_URL, { email, password })
       .pipe(tap((res: LoginType) => this.setSession(res)));
   }
 

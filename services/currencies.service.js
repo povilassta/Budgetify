@@ -14,6 +14,14 @@ const CurrencyService = {
       throw errors;
     }
   },
+  getAll: async () => {
+    try {
+      const currencies = await Currency.find();
+      return currencies;
+    } catch (errors) {
+      throw errors;
+    }
+  },
 };
 
 export default CurrencyService;

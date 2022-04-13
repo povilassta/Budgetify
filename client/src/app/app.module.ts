@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { MainModule } from './main/main.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],

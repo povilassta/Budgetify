@@ -1,0 +1,44 @@
+@use "../../shared/variables" as var
+    
+.category-form
+    width: 30rem
+    height: 100%
+    background: var.$background-grey
+    padding: 2rem 1rem
+    &__header
+        display: flex
+        justify-content: space-between
+    &__types
+        transition: 0.3s
+        &__expense
+            opacity: 0.3
+            margin-right: 1rem
+            mat-icon
+                border-radius: 50%
+                color: var.$base-white
+                background: var.$expense-red
+        &__income
+            opacity: 0.3
+            mat-icon
+                border-radius: 50%
+                color: var.$base-white
+                background: var.$income-green
+    &__fields
+        padding-top: 2rem
+        form
+            display: flex
+            flex-direction: column
+        &__buttons
+            display: flex
+            justify-content: end
+            button
+                margin-left: 1rem
+            &__cancel
+                background: var.$background-grey
+                transition: 0.3s
+                &:hover
+                    color: var.$expense-red
+            &__save
+                background: var.$base-blue
+.active
+    opacity: 1

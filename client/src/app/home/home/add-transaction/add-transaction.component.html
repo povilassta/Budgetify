@@ -1,0 +1,84 @@
+<div class="transaction-form" [@slideInOut]>
+  <div class="transaction-form__header">
+    <h1>Add Transaction</h1>
+    <button
+      mat-icon-button
+      aria-label="exit form button"
+      (click)="closeOverlay()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="transaction-form__types">
+    <button
+      mat-flat-button
+      [ngClass]="{ active: isExpense }"
+      (click)="changeType('expense')"
+      class="transaction-form__types__expense"
+    >
+      <mat-icon>arrow_upward</mat-icon> Expenses
+    </button>
+    <button
+      mat-flat-button
+      [ngClass]="{ active: !isExpense }"
+      (click)="changeType('income')"
+      class="transaction-form__types__income"
+    >
+      <mat-icon>arrow_downward</mat-icon> Income
+    </button>
+  </div>
+  <div class="transaction-form__inputs">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="transaction-form__inputs__row" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput formControlName="title" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Categories</mat-label>
+        <mat-select formControlName="categories" multiple>
+          <mat-option *ngFor="let category of categories" [value]="category">{{
+            category.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="transaction-form__inputs__row" appearance="fill">
+        <mat-label>Amount</mat-label>
+        <input type="number" matInput formControlName="amount" />
+      </mat-form-field>
+      <mat-form-field class="transaction-form__inputs__row" appearance="fill">
+        <mat-label>Transaction date</mat-label>
+        <input type="date" matInput formControlName="transactionDate" />
+      </mat-form-field>
+      <mat-form-field class="transaction-form__inputs__row" appearance="fill">
+        <mat-label>Payee</mat-label>
+        <input type="text" matInput formControlName="payee" />
+      </mat-form-field>
+      <mat-form-field
+        class="transaction-form__inputs__description"
+        appearance="fill"
+      >
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <div class="transaction-form__inputs__buttons">
+        <button
+          color="basic"
+          mat-flat-button
+          class="transaction-form__inputs__buttons__cancel"
+          (click)="closeOverlay()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          color="basic"
+          [disabled]="transactionForm.invalid"
+          mat-flat-button
+          class="transaction-form__inputs__buttons__save"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

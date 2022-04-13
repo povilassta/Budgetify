@@ -1,0 +1,74 @@
+<div class="transaction">
+  <div class="transaction__header">
+    <h1>Transaction Information</h1>
+    <div class="transaction__header_buttons">
+      <button mat-icon-button aria-label="edit">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="delete" (click)="openDeleteDialog()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="exit" (click)="callCloseOverlay()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="transaction__type-amount">
+    <mat-icon
+      [ngClass]="{
+        income: transaction.type === 'income',
+        expense: transaction.type === 'expense'
+      }"
+      class="transaction__type-amount__type"
+    >
+      {{ transaction.type === 'income' ? 'arrow_downward' : 'arrow_upward' }}
+    </mat-icon>
+    <div
+      [ngClass]="{
+        income: transaction.type === 'income',
+        expense: transaction.type === 'expense'
+      }"
+      class="transaction__type-amount__amount"
+    >
+      {{ transaction.type === 'income' ? '' : '-'
+      }}{{
+        transaction.amount.valueOf()
+          | currency: accountService.getActiveAccountCurrency()
+      }}
+    </div>
+  </div>
+  <div class="transaction__title">
+    {{ transaction.title | titlecase }}
+  </div>
+  <div class="transaction__categories">
+    <div
+      *ngFor="let category of transaction.categories; let i = index"
+      class="transaction__categories__category"
+    >
+      {{ category.name | titlecase }}
+    </div>
+  </div>
+  <div class="transaction__data">
+    <div class="transaction__data__row">
+      <div class="transaction__data__row__first">Payment date:</div>
+      <div class="transaction__data__row__second">
+        {{ transaction.transactionDate | date }}
+      </div>
+    </div>
+    <div class="transaction__data__row">
+      <div class="transaction__data__row__first">Payee:</div>
+      <div class="transaction__data__row__second">
+        {{ transaction.payee ? transaction.payee : '-' }}
+      </div>
+    </div>
+    <div class="transaction__data__row">
+      <div class="transaction__data__row__first">Description:</div>
+      <div class="transaction__data__row__second">
+        {{ transaction.description ? transaction.description : '-' }}
+      </div>
+    </div>
+  </div>
+  <div class="transaction__buttons">
+    <button mat-button (click)="callCloseOverlay()">Close</button>
+  </div>
+</div>

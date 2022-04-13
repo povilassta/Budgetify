@@ -1,0 +1,30 @@
+@use '../../shared/variables' as var
+    
+.statistics
+    display: flex
+    padding: 2rem 2rem
+    &__accounts
+        width: 20%
+        display: flex
+        flex-direction: column
+        margin-right: 3rem
+    &__main
+        width: 80%
+        &__categories
+            padding: 1rem
+            &__amount
+                display: flex
+                justify-content: space-between
+                border-radius: 15px
+                margin-top: 1rem
+                background: var.$base-blue
+                width: 14rem
+                font-size: 1rem
+                padding: 1rem
+                &__colored
+                    color: var.$expense-red
+            &__table
+                margin-top: 1rem
+                table
+                    width: 100%
+                    background: var.$background-grey

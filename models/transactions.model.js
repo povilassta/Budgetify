@@ -28,10 +28,20 @@ const transactionSchema = mongoose.Schema({
     required: [true, "Transaction amount is required."],
     min: [0, "Transaction amount can't be less than 0."],
   },
-  category: {
-    type: mongoose.ObjectId,
-    ref: "Category",
-    required: [true, "Category is required."],
+  categories: [
+    {
+      type: mongoose.ObjectId,
+      ref: "Category",
+      required: [true, "Category is required."],
+    },
+  ],
+  payee: {
+    type: String,
+    default: "",
+  },
+  description: {
+    type: String,
+    default: "",
   },
 });
 

@@ -1,0 +1,54 @@
+<div class="categories">
+  <div class="categories__main">
+    <mat-form-field class="categories__main__searchfield" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [(ngModel)]="value" />
+      <button
+        *ngIf="value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="value = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <div class="categories__main__cards">
+      <app-category-card
+        *ngFor="
+          let category of categories | searchFilter: value;
+          let i = index;
+          trackBy: trackBy
+        "
+        [category]="category"
+      ></app-category-card>
+    </div>
+  </div>
+  <div class="categories__options">
+    <div class="filter-buttons">
+      <button
+        [ngClass]="{ selected: categoryService.isIncomeFilter }"
+        class="filter-buttons__income"
+        mat-mini-fab
+        aria-label="income"
+        (click)="filterCategories('income')"
+      >
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+      <button
+        [ngClass]="{ selected: categoryService.isExpenseFilter }"
+        class="filter-buttons__expense"
+        mat-mini-fab
+        aria-label="expense"
+        (click)="filterCategories('expense')"
+      >
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+    </div>
+    <div class="add-buttons">
+      <button mat-flat-button (click)="createCategoryCreateOverlay()">
+        <mat-icon>add_circle</mat-icon> Add category
+      </button>
+    </div>
+  </div>
+</div>

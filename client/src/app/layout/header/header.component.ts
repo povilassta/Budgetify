@@ -30,4 +30,16 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
+
+  public navigateToCategories(): void {
+    this.router.navigateByUrl('/categories');
+  }
+
+  public navigateHome(): void {
+    this.router.navigateByUrl('/');
+  }
+
+  public navigateToStatistics(): void {
+    this.router.navigateByUrl('/statistics');
+  }
 }

@@ -13,11 +13,11 @@ export class MainComponent implements OnInit {
   constructor() {}
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: { target: { innerWidth: number } }) {
+  public onResize(event: { target: { innerWidth: number } }): void {
     if (event.target.innerWidth > 800) {
       this.sidenav.close();
     }
   }
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }

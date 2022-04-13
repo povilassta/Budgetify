@@ -6,11 +6,23 @@ import { Subject } from 'rxjs';
 })
 export class CommunicationService {
   private componentMethodCallSource = new Subject<void>();
+  private overlayCloseCallSource = new Subject<void>();
+  private updateValuesCallSource = new Subject<void>();
 
-  componentMethodCalled$ = this.componentMethodCallSource.asObservable();
+  public componentMethodCalled$ = this.componentMethodCallSource.asObservable();
+  public overlayCloseCalled$ = this.overlayCloseCallSource.asObservable();
+  public updateValuesCalled$ = this.updateValuesCallSource.asObservable();
 
-  callComponentMethod() {
+  public callComponentMethod(): void {
     this.componentMethodCallSource.next();
+  }
+
+  public callCloseOverlay(): void {
+    this.overlayCloseCallSource.next();
+  }
+
+  public callUpdateValues(): void {
+    this.updateValuesCallSource.next();
   }
 
   constructor() {}

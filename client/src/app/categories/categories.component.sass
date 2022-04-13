@@ -1,0 +1,45 @@
+@use "../shared/variables" as var
+
+.categories
+    display: flex
+    padding: 2rem
+    &__main
+        width: 85%
+        &__cards
+            display: flex
+            flex-wrap: wrap
+        &__searchfield
+            width: 60rem
+    &__options
+        width: 15%
+        display: flex
+        flex-direction: column
+        align-items: end
+        
+        
+.filter-buttons
+    padding-right: 0.5rem
+    &__income
+        background: var.$income-green
+        transition: 0.3s
+        opacity: 0.3
+        &:hover
+            opacity: 1
+    &__expense
+        opacity: 0.3
+        transition: 0.3s
+        margin: 1rem
+        background: var.$expense-red
+        &:hover
+            opacity: 1
+
+.selected
+    opacity: 1
+
+.add-buttons
+    padding-top: 1rem
+    button
+        background-color: var.$base-blue
+        transition: 0.3s
+        &:hover
+            background-color: var.$hover-blue
