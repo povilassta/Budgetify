@@ -11,6 +11,7 @@ import { CommunicationService } from 'src/app/home/home/account-card/services/co
 import { Statistic } from 'src/app/models/statistic.model';
 import { Category } from 'src/app/models/category.model';
 import { CategoryService } from 'src/app/home/home/add-transaction/services/category.service';
+import { switchMap } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -38,10 +39,12 @@ export class StatisticsComponent implements OnInit {
     private communicationService: CommunicationService,
     private categoryService: CategoryService
   ) {
-    this.communicationService.componentMethodCalled$.subscribe(() => {
-      this.updateCalcs();
-      this.currency = this.accountService.activeAccount.currency.code;
-    });
+    this.communicationService.componentMethodCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.updateCalcs();
+        this.currency = this.accountService.activeAccount.currency.code;
+      });
   }
 
   public trackBy(index: number, item: Account): string {
@@ -63,44 +66,34 @@ export class StatisticsComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.accountService
       .getAccounts()
+      .pipe(
+        switchMap((accounts) => {
+          this.accounts = accounts;
+          return this.transactionService.getTransactions(accounts[0]._id);
+        }),
+        switchMap((transactions) => {
+          this.transactions = transactions;
+          return this.categoryService.getCategories();
+        })
+      )
       .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (data) => (this.accounts = data),
-        complete: () => {
-          this.transactionService
-            .getTransactions(this.accounts[0]._id)
-            .subscribe({
-              next: (data) => {
-                this.transactions = data;
-              },
-              complete: () => {
-                this.categoryService.getCategories().subscribe({
-                  next: (data) => {
-                    this.categories = data;
-                  },
-                  complete: () => {
-                    this.amount = this.statisticsService.calculateTotalExpense(
-                      this.transactions,
-                      this.range.value.start,
-                      this.range.value.end
-                    );
-                    this.statistics =
-                      this.statisticsService.calculateCategoryStats(
-                        this.categories,
-                        this.transactions,
-                        this.range.value.start,
-                        this.range.value.end
-                      );
-                    this.currency =
-                      this.accountService.activeAccount.currency.code;
-                  },
-                });
-              },
-            });
-        },
+      .subscribe((categories) => {
+        this.categories = categories;
+        this.amount = this.statisticsService.calculateTotalExpense(
+          this.transactions,
+          this.range.value.start,
+          this.range.value.end
+        );
+        this.statistics = this.statisticsService.calculateCategoryStats(
+          this.categories,
+          this.transactions,
+          this.range.value.start,
+          this.range.value.end
+        );
+        this.currency = this.accountService.activeAccount.currency.code;
       });
   }
 }

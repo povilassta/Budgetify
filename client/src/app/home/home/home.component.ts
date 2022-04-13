@@ -14,6 +14,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { TransactionViewComponent } from './transaction-view/transaction-view.component';
 import { AddAccountComponent } from './add-account/add-account.component';
+import { switchMap } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -44,12 +45,16 @@ export class HomeComponent implements OnInit {
     private overlay: Overlay,
     private positionBuilder: OverlayPositionBuilder
   ) {
-    this.communicationService.componentMethodCalled$.subscribe(() => {
-      this.filterTransactions();
-    });
-    this.communicationService.overlayCloseCalled$.subscribe(() => {
-      this.closeOverlay();
-    });
+    this.communicationService.componentMethodCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.filterTransactions();
+      });
+    this.communicationService.overlayCloseCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.closeOverlay();
+      });
   }
 
   public createTransactionCreateOverlay(): void {
@@ -75,7 +80,10 @@ export class HomeComponent implements OnInit {
     const overlayPortal = new ComponentPortal(TransactionViewComponent);
     const componentRef = this.overlayRef.attach(overlayPortal);
     componentRef.instance.transaction = transaction; // pass transaction data to overlay
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    this.overlayRef
+      .backdropClick()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.overlayRef.detach());
   }
 
   public createAccountCreateOverlay(): void {
@@ -86,28 +94,30 @@ export class HomeComponent implements OnInit {
     });
     const overlayPortal = new ComponentPortal(AddAccountComponent);
     this.overlayRef.attach(overlayPortal);
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    this.overlayRef
+      .backdropClick()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.overlayRef.detach());
   }
 
   public closeOverlay(): void {
-    if (this.overlayRef.hasAttached()) this.overlayRef.detach();
+    if (this.overlayRef.hasAttached()) {
+      this.overlayRef.detach();
+    }
   }
 
   public ngOnInit(): void {
     this.accountsService
       .getAccounts()
+      .pipe(
+        switchMap((accounts) => {
+          this.accounts = accounts;
+          return this.transactionService.getTransactions(accounts[0]._id);
+        })
+      )
       .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (data) => (this.accounts = data),
-        complete: () => {
-          this.transactionService
-            .getTransactions(this.accounts[0]._id)
-            .subscribe({
-              next: (data) => {
-                this.filteredTransactions = data;
-              },
-            });
-        },
+      .subscribe((transactions) => {
+        this.filteredTransactions = transactions;
       });
   }
 }
