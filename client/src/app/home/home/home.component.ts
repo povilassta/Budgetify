@@ -117,7 +117,18 @@ export class HomeComponent implements OnInit {
       .pipe(
         switchMap((accounts) => {
           this.accounts = accounts;
-          return this.transactionService.getTransactions(accounts[0]._id);
+          if (
+            this.accounts.some(
+              (a) => a._id === this.accountsService.activeAccount._id
+            )
+          ) {
+            return this.transactionService.getTransactions(
+              this.accountsService.activeAccount._id
+            );
+          } else {
+            this.accountsService.activateAccount(accounts[0]._id);
+            return this.transactionService.getTransactions(accounts[0]._id);
+          }
         })
       )
       .pipe(untilDestroyed(this))
