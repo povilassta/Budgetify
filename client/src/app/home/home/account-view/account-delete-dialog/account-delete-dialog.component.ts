@@ -20,18 +20,19 @@ export class AccountDeleteDialogComponent implements OnInit {
     private communicationService: CommunicationService
   ) {}
 
-  public deleteAccount(): void {
-    this.accountService
-      .deleteAccount(this.data._id)
-      .pipe(untilDestroyed(this))
-      .subscribe((data: any) => {
-        this.router
-          .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/']);
-          });
-      });
+  private callUpdateValues(): void {
+    this.communicationService.callUpdateValues();
+  }
+
+  public callCloseOverlay(): void {
     this.communicationService.callCloseOverlay();
+  }
+
+  public deleteAccount(): void {
+    this.accountService.deleteAccount(this.data._id).subscribe((data: any) => {
+      this.callUpdateValues();
+      this.callCloseOverlay();
+    });
   }
 
   ngOnInit(): void {}

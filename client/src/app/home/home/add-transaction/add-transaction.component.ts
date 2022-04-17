@@ -70,6 +70,10 @@ export class AddTransactionComponent implements OnInit {
     this.communicationService.callCloseOverlay();
   }
 
+  public updateValues(): void {
+    this.communicationService.callUpdateValues();
+  }
+
   public changeType(type: string): void {
     if (type === 'expense') {
       this.isExpense = true;
@@ -100,11 +104,7 @@ export class AddTransactionComponent implements OnInit {
         type,
       })
       .subscribe((data: any) => {
-        this.router
-          .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/']);
-          });
+        this.updateValues();
         this.closeOverlay();
       });
   }

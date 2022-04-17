@@ -18,18 +18,22 @@ export class TransactionDeleteDialogComponent implements OnInit {
     private communicationService: CommunicationService
   ) {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
+
+  public callCloseOverlay(): void {
+    this.communicationService.callCloseOverlay();
+  }
+
+  public callUpdateValues(): void {
+    this.communicationService.callUpdateValues();
+  }
 
   public deleteTransaction(): void {
     this.transactionService
       .deleteTransaction(this.data._id)
       .subscribe((data: any) => {
-        this.router
-          .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/']);
-          });
+        this.callUpdateValues();
+        this.callCloseOverlay();
       });
-    this.communicationService.callCloseOverlay();
   }
 }
