@@ -55,6 +55,11 @@ export class HomeComponent implements OnInit {
       .subscribe(() => {
         this.closeOverlay();
       });
+    this.communicationService.updateValuesCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.updateValues();
+      });
   }
 
   public createTransactionCreateOverlay(): void {
@@ -104,6 +109,21 @@ export class HomeComponent implements OnInit {
     if (this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
+  }
+
+  private updateValues(): void {
+    this.accountsService
+      .getAccounts()
+      .pipe(
+        switchMap((accounts) => {
+          this.accounts = accounts;
+          return this.transactionService.getTransactions(accounts[0]._id);
+        })
+      )
+      .pipe(untilDestroyed(this))
+      .subscribe((transactions) => {
+        this.filteredTransactions = transactions;
+      });
   }
 
   public ngOnInit(): void {

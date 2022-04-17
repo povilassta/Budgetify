@@ -32,6 +32,10 @@ export class AddAccountComponent implements OnInit {
     this.communicationService.callCloseOverlay();
   }
 
+  public callUpdateValues(): void {
+    this.communicationService.callUpdateValues();
+  }
+
   public ngOnInit(): void {
     this.currencyService
       .getCurrencies()
@@ -44,11 +48,7 @@ export class AddAccountComponent implements OnInit {
     this.accountService
       .postAccount({ title, currency: currency._id, description })
       .subscribe((data: any) => {
-        this.router
-          .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/']);
-          });
+        this.callUpdateValues();
         this.callCloseOverlay();
       });
   }
