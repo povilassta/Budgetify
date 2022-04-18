@@ -2,7 +2,7 @@
   <div class="transaction__header">
     <h1>Transaction Information</h1>
     <div class="transaction__header_buttons">
-      <button mat-icon-button aria-label="edit">
+      <button mat-icon-button aria-label="edit" (click)="callEditTransaction()">
         <mat-icon>edit</mat-icon>
       </button>
       <button mat-icon-button aria-label="delete" (click)="openDeleteDialog()">

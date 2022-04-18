@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   public filteredTransactions!: Transaction[];
   public value: string = '';
   private overlayRef!: OverlayRef;
+  private currentTransaction!: Transaction;
 
   public trackBy(index: number, item: Account | Transaction): string {
     return item._id;
@@ -60,6 +61,19 @@ export class HomeComponent implements OnInit {
       .subscribe(() => {
         this.updateValues();
       });
+    this.communicationService.openEditTransactionOverlay$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.overlayRef.detach();
+        const componentRef = this.overlayRef.attach(
+          new ComponentPortal(AddTransactionComponent)
+        );
+        componentRef.instance.transaction = this.currentTransaction;
+        this.overlayRef
+          .backdropClick()
+          .pipe(untilDestroyed(this))
+          .subscribe(() => this.overlayRef.detach());
+      });
   }
 
   public createTransactionCreateOverlay(): void {
@@ -77,6 +91,7 @@ export class HomeComponent implements OnInit {
   }
 
   public createTransactionViewOverlay(transaction: Transaction): void {
+    this.currentTransaction = transaction;
     this.overlayRef = this.overlay.create({
       height: '100%',
       hasBackdrop: true,

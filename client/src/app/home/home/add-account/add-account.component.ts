@@ -24,8 +24,7 @@ export class AddAccountComponent implements OnInit {
   constructor(
     private currencyService: CurrencyService,
     private communicationService: CommunicationService,
-    private accountService: AccountService,
-    private router: Router
+    private accountService: AccountService
   ) {}
 
   public callCloseOverlay(): void {

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Category } from 'src/app/models/category.model';
+import { Transaction } from 'src/app/models/transaction.model';
 import { AccountService } from '../account-card/services/accounts.service';
 import { CommunicationService } from '../account-card/services/communication.service';
 import { TransactionService } from '../transaction-card/services/transaction.service';
@@ -41,6 +42,8 @@ export class AddTransactionComponent implements OnInit {
   public categories!: Category[];
   public selectedCategories!: Category[];
   public isExpense: boolean = true;
+  public transaction: Transaction | undefined;
+  public title!: string;
 
   constructor(
     private categoryService: CategoryService,
@@ -51,6 +54,8 @@ export class AddTransactionComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.title = this.transaction ? 'Edit Transaction' : 'Add Transaction';
+    this.setInitialValues();
     this.categoryService
       .getCategories()
       .pipe(untilDestroyed(this))
@@ -60,6 +65,17 @@ export class AddTransactionComponent implements OnInit {
             (category) => category.type === 'expense'
           )),
       });
+  }
+
+  private setInitialValues(): void {
+    this.transactionForm.setValue({
+      title: this.transaction?.title,
+      categories: this.transaction?.categories,
+      amount: this.transaction?.amount,
+      transactionDate: this.transaction?.transactionDate,
+      payee: this.transaction?.payee,
+      description: this.transaction?.description,
+    });
   }
 
   public trackBy(item: Category): string {

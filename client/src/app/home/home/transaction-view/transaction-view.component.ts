@@ -24,6 +24,10 @@ export class TransactionViewComponent implements OnInit {
     return item._id;
   }
 
+  public callEditTransaction(): void {
+    this.communicationService.callOpenEditTransactionOverlay();
+  }
+
   public callCloseOverlay(): void {
     this.communicationService.callCloseOverlay();
   }
