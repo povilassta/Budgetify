@@ -42,6 +42,16 @@ export class TransactionService {
     );
   }
 
+  public updateTransaction(
+    transactionId: string,
+    data: TransactionPost
+  ): Observable<any> {
+    return this.http.patch(
+      `${this.BASE_URL}${this.accountService.activeAccount._id}/transactions/${transactionId}`,
+      data
+    );
+  }
+
   private filterHelper(type: string): Transaction[] {
     type === 'income'
       ? (this.isExpenseFilter = false)

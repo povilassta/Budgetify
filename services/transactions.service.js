@@ -61,6 +61,27 @@ const transactionsService = {
     }
   },
 
+  update: async (data, transactionId, accountId, userId) => {
+    try {
+      if (await AccountsService.get(accountId, userId)) {
+        const transaction = await Transaction.findOneAndUpdate(
+          { _id: transactionId, accountId },
+          data,
+          { new: true }
+        );
+        if (transaction) {
+          return transaction;
+        } else {
+          throw new NotFoundError("Transaction not found");
+        }
+      } else {
+        throw new NotFoundError("Account not found");
+      }
+    } catch (errors) {
+      throw errors;
+    }
+  },
+
   delete: async (transactionId, accountId, userId) => {
     try {
       if (await AccountsService.get(accountId, userId)) {

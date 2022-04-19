@@ -1,4 +1,5 @@
 import { trigger, transition, style, animate } from '@angular/animations';
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -40,42 +41,52 @@ export class AddTransactionComponent implements OnInit {
     description: new FormControl(''),
   });
   public categories!: Category[];
-  public selectedCategories!: Category[];
   public isExpense: boolean = true;
-  public transaction: Transaction | undefined;
+  public transaction!: Transaction;
   public title!: string;
 
   constructor(
     private categoryService: CategoryService,
     private communicationService: CommunicationService,
-    private accountService: AccountService,
-    private transactionService: TransactionService,
-    private router: Router
+    private transactionService: TransactionService
   ) {}
 
   public ngOnInit(): void {
     this.title = this.transaction ? 'Edit Transaction' : 'Add Transaction';
-    this.setInitialValues();
     this.categoryService
       .getCategories()
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: (data) =>
-          (this.categories = data.filter(
+        next: (data) => {
+          this.categories = data.filter(
             (category) => category.type === 'expense'
-          )),
+          );
+          if (this.transaction) {
+            this.setInitialValues();
+          }
+        },
       });
   }
 
   private setInitialValues(): void {
+    this.changeType(this.transaction.type);
+    const initialCategories = this.categories.filter((c) =>
+      this.transaction.categories.some((cat) => cat._id === c._id)
+    );
     this.transactionForm.setValue({
       title: this.transaction?.title,
-      categories: this.transaction?.categories,
+      categories: initialCategories,
       amount: this.transaction?.amount,
-      transactionDate: this.transaction?.transactionDate,
+      transactionDate: new Date(
+        this.transaction?.transactionDate ||
+          new Date().toISOString().substring(0, 10)
+      )
+        .toISOString()
+        .substring(0, 10),
       payee: this.transaction?.payee,
       description: this.transaction?.description,
     });
+    this.isExpense = this.transaction?.type === 'expense' ? true : false;
   }
 
   public trackBy(item: Category): string {
@@ -109,19 +120,36 @@ export class AddTransactionComponent implements OnInit {
       this.transactionForm.value;
     const categoryIds = categories.map((c: Category) => c._id);
     const type = this.isExpense ? 'expense' : 'income';
-    this.transactionService
-      .postTransaction({
-        title,
-        amount,
-        categories: categoryIds,
-        transactionDate,
-        payee,
-        description,
-        type,
-      })
-      .subscribe((data: any) => {
-        this.updateValues();
-        this.closeOverlay();
-      });
+    if (this.transaction) {
+      this.transactionService
+        .updateTransaction(this.transaction._id, {
+          title,
+          amount,
+          categories: categoryIds,
+          transactionDate,
+          payee,
+          description,
+          type,
+        })
+        .subscribe((data: any) => {
+          this.updateValues();
+          this.closeOverlay();
+        });
+    } else {
+      this.transactionService
+        .postTransaction({
+          title,
+          amount,
+          categories: categoryIds,
+          transactionDate,
+          payee,
+          description,
+          type,
+        })
+        .subscribe((data: any) => {
+          this.updateValues();
+          this.closeOverlay();
+        });
+    }
   }
 }
