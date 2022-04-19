@@ -74,6 +74,11 @@ export class HomeComponent implements OnInit {
           .pipe(untilDestroyed(this))
           .subscribe(() => this.overlayRef.detach());
       });
+    this.communicationService.openEditAccountOverlay$
+      .pipe(untilDestroyed(this))
+      .subscribe((account) => {
+        this.createAccountEditOverlay(account);
+      });
   }
 
   public createTransactionCreateOverlay(): void {
@@ -124,6 +129,22 @@ export class HomeComponent implements OnInit {
     if (this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
+  }
+
+  public createAccountEditOverlay(account: Account): void {
+    this.overlayRef = this.overlay.create({
+      height: '100%',
+      hasBackdrop: true,
+      positionStrategy: this.positionBuilder.global().top().right(),
+    });
+    const componentRef = this.overlayRef.attach(
+      new ComponentPortal(AddAccountComponent)
+    );
+    componentRef.instance.account = account;
+    this.overlayRef
+      .backdropClick()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.overlayRef.detach());
   }
 
   private updateValues(): void {

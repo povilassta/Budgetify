@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Account } from 'src/app/models/account.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +10,19 @@ export class CommunicationService {
   private overlayCloseCallSource = new Subject<void>();
   private updateValuesCallSource = new Subject<void>();
   private openEditTransactionOverlaySource = new Subject<void>();
+  private openEditAccountOverlaySource = new Subject<Account>();
 
   public componentMethodCalled$ = this.componentMethodCallSource.asObservable();
   public overlayCloseCalled$ = this.overlayCloseCallSource.asObservable();
   public updateValuesCalled$ = this.updateValuesCallSource.asObservable();
   public openEditTransactionOverlay$ =
     this.openEditTransactionOverlaySource.asObservable();
+  public openEditAccountOverlay$ =
+    this.openEditAccountOverlaySource.asObservable();
+
+  public callOpenEditAccountOverlay(account: Account): void {
+    this.openEditAccountOverlaySource.next(account);
+  }
 
   public callComponentMethod(): void {
     this.componentMethodCallSource.next();

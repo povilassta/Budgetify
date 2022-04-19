@@ -32,6 +32,10 @@ export class AccountService {
     return this.http.delete(`${this.BASE_URL}${accountId}`);
   }
 
+  public updateAccount(accountId: string, data: AccountPost): Observable<any> {
+    return this.http.patch(`${this.BASE_URL}${accountId}`, data);
+  }
+
   public activateAccount(id: string): void {
     const account = this.accounts.find((el) => el._id === id);
     this.activeAccount = account!;

@@ -44,6 +44,11 @@ export class AccountCardComponent implements OnInit {
       .subscribe(() => {
         this.closeOverlay();
       });
+    this.communicationService.openEditAccountOverlay$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.overlayRef.detach();
+      });
   }
 
   public ngOnInit(): void {
