@@ -8,10 +8,11 @@ import { Transaction } from 'src/app/models/transaction.model';
 import { StatisticsService } from '../services/statistics.service';
 import * as moment from 'moment';
 import { CommunicationService } from 'src/app/home/home/account-card/services/communication.service';
-import { Statistic } from 'src/app/models/statistic.model';
+import { CategoryStatistic } from 'src/app/models/category-statistic.model';
 import { Category } from 'src/app/models/category.model';
 import { CategoryService } from 'src/app/home/home/add-transaction/services/category.service';
 import { switchMap } from 'rxjs';
+import { Chart, registerables } from 'chart.js';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +22,7 @@ import { switchMap } from 'rxjs';
 })
 export class StatisticsComponent implements OnInit {
   public accounts!: Account[];
-  public statistics!: Statistic[];
+  public statistics!: CategoryStatistic[];
   public transactions!: Transaction[];
   public categories!: Category[];
   public currency: string = 'EUR'; // initial value gets updated when activeAccount is retrieved
@@ -31,6 +32,7 @@ export class StatisticsComponent implements OnInit {
     end: new FormControl(moment()),
   });
   public displayedColumns: string[] = ['category', 'amount', 'precentage'];
+  public categoriesChart!: Chart;
 
   constructor(
     public accountService: AccountService,
@@ -39,6 +41,7 @@ export class StatisticsComponent implements OnInit {
     private communicationService: CommunicationService,
     private categoryService: CategoryService
   ) {
+    Chart.register(...registerables);
     this.communicationService.componentMethodCalled$
       .pipe(untilDestroyed(this))
       .subscribe(() => {
@@ -64,6 +67,56 @@ export class StatisticsComponent implements OnInit {
       this.range.value.start,
       this.range.value.end
     );
+    this.updateChart();
+  }
+
+  public updateChart(): void {
+    this.categoriesChart.data.labels = this.statistics.map((st) => st.category);
+    this.categoriesChart.data.datasets.forEach((dataset) => {
+      dataset.data = this.statistics.map((st) => st.amount);
+
+      this.categoriesChart.update();
+    });
+  }
+
+  public createChart(): void {
+    this.categoriesChart = new Chart('categoriesChart', {
+      type: 'bar',
+      data: {
+        labels: this.statistics.map((st) => st.category),
+        datasets: [
+          {
+            data: this.statistics.map((st) => st.amount),
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+            ],
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: this.currency,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
   }
 
   public ngOnInit(): void {
@@ -94,6 +147,7 @@ export class StatisticsComponent implements OnInit {
           this.range.value.end
         );
         this.currency = this.accountService.activeAccount.currency.code;
+        this.createChart();
       });
   }
 }
