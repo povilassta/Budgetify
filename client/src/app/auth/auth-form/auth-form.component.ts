@@ -14,12 +14,25 @@ export class AuthFormComponent {
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
-  constructor(private authService: AuthService, private router: Router) {}
+  public areInvalidCreds: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.loginForm.valueChanges.subscribe(() => {
+      this.areInvalidCreds = false;
+    });
+  }
 
   public onSubmit(): void {
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe((data) => {
-      this.router.navigateByUrl('/');
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/');
+      },
+      error: (err: any) => {
+        if (err.status === 401) {
+          this.areInvalidCreds = true;
+        }
+      },
     });
   }
 }
