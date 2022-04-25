@@ -28,7 +28,7 @@
     </button>
   </div>
   <div class="category-form__fields">
-    <form [formGroup]="categoryForm" (ngSumbit)="onSubmit()">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input type="text" matInput formControlName="name" />

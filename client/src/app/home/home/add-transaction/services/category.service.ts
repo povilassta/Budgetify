@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { CategoryPost } from 'src/app/models/category-post.model';
 import { Category } from 'src/app/models/category.model';
 
 @Injectable({
@@ -21,6 +22,10 @@ export class CategoryService {
         },
       })
     );
+  }
+
+  public insertCategory(data: CategoryPost): Observable<any> {
+    return this.http.post(this.BASE_URL, data);
   }
 
   public updateCategory(name: string, categoryId: string): Observable<any> {
