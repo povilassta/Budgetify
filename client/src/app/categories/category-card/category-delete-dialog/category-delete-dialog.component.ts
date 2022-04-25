@@ -20,15 +20,21 @@ export class CategoryDeleteDialogComponent implements OnInit {
     this.communicationService.callUpdateValues();
   }
 
-  public deleteCategory(): void {
-    this.categoryService
-      .deleteCategory(this.data._id)
-      .subscribe((data: any) => {
-        this.callUpdateValues();
-      });
+  private callOpenSnackbar(message: string): void {
+    this.communicationService.callOpenSnackbar(message);
   }
 
-  ngOnInit(): void {
-    console.log(this.data);
+  public deleteCategory(): void {
+    this.categoryService.deleteCategory(this.data._id).subscribe({
+      next: () => {
+        this.callUpdateValues();
+        this.callOpenSnackbar('Category deleted successfully');
+      },
+      error: (err: any) => {
+        this.callOpenSnackbar(`Deletion failed: ${err.error.message}`);
+      },
+    });
   }
+
+  ngOnInit(): void {}
 }

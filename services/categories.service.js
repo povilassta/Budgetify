@@ -1,5 +1,4 @@
 import Category from "../models/categories.model.js";
-import Transaction from "../models/transactions.model.js";
 import TransactionsService from "./transactions.service.js";
 import NotFoundError from "../errors/notfound.error.js";
 import ConflictError from "../errors/conflict.error.js";
@@ -39,6 +38,9 @@ const CategoryService = {
 
   insert: async (data, userId) => {
     try {
+      console.log(
+        await CategoryService.getByNameType(data.name, data.type, userId)
+      );
       if (await CategoryService.getByNameType(data.name, data.type, userId)) {
         throw new BadRequestError("Category already exists");
       } else {
@@ -56,15 +58,19 @@ const CategoryService = {
 
   update: async (data, categoryId, userId) => {
     try {
-      const category = await Category.findOneAndUpdate(
-        { _id: categoryId, userId },
-        data,
-        { new: true }
-      );
-      if (category) {
-        return category;
+      if (await CategoryService.getByNameType(data.name, data.type, userId)) {
+        throw new BadRequestError("Category already exists");
       } else {
-        throw new NotFoundError("Category not found");
+        const category = await Category.findOneAndUpdate(
+          { _id: categoryId, userId },
+          data,
+          { new: true }
+        );
+        if (category) {
+          return category;
+        } else {
+          throw new NotFoundError("Category not found");
+        }
       }
     } catch (errors) {
       throw errors;
@@ -75,9 +81,6 @@ const CategoryService = {
     try {
       const category = await Category.findOne({ _id: categoryId, userId });
       if (category) {
-        console.log(
-          (await TransactionsService.getForAllAccounts(categoryId)).length
-        );
         if ((await TransactionsService.getForAllAccounts(categoryId)).length) {
           throw new ConflictError("Category still has transactions");
         } else {

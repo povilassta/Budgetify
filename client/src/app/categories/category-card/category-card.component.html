@@ -33,8 +33,21 @@
     >
       <mat-icon>done</mat-icon>
     </button>
-    <button mat-icon-button aria-label="delete" (click)="openDeleteDialog()">
+    <button
+      mat-icon-button
+      aria-label="delete"
+      (click)="openDeleteDialog()"
+      *ngIf="!isEditingMode"
+    >
       <mat-icon>delete</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="exit"
+      (click)="isEditingMode = !isEditingMode"
+      *ngIf="isEditingMode"
+    >
+      <mat-icon>close</mat-icon>
     </button>
   </div>
 </div>

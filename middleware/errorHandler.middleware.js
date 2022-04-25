@@ -1,5 +1,9 @@
 function errorHandler(err, req, res, next) {
-  const customErrorNames = ["ConflictError", "DuplicateError", "NotFoundError"];
+  const customErrorNames = [
+    "ConflictError",
+    "BadRequestError",
+    "NotFoundError",
+  ];
   if (err.name === "ValidationError") {
     let errors = {};
 

@@ -20,6 +20,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [SearchFilterPipe],
@@ -44,6 +45,7 @@ import { MatTableModule } from '@angular/material/table';
     MatTabsModule,
     MatMomentDateModule,
     MatTableModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -66,6 +68,7 @@ import { MatTableModule } from '@angular/material/table';
     MatTabsModule,
     MatMomentDateModule,
     MatTableModule,
+    MatSnackBarModule,
   ],
 })
 export class SharedModule {}

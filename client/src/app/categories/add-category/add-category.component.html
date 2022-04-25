@@ -32,6 +32,11 @@
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input type="text" matInput formControlName="name" />
+        <mat-error
+          *ngIf="categoryForm['controls'].name.hasError('alreadyExist')"
+        >
+          Category with this name and type already exists
+        </mat-error>
       </mat-form-field>
       <div class="category-form__fields__buttons">
         <button
@@ -45,7 +50,6 @@
         <button
           type="submit"
           color="basic"
-          [disabled]="categoryForm.invalid"
           mat-flat-button
           class="category-form__fields__buttons__save"
         >

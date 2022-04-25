@@ -5,6 +5,7 @@ import {
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CommunicationService } from '../home/home/account-card/services/communication.service';
 import { CategoryService } from '../home/home/add-transaction/services/category.service';
@@ -32,7 +33,8 @@ export class CategoriesComponent implements OnInit {
     public categoryService: CategoryService,
     private overlay: Overlay,
     private positionBuilder: OverlayPositionBuilder,
-    private communicationService: CommunicationService
+    private communicationService: CommunicationService,
+    private _snackBar: MatSnackBar
   ) {
     this.communicationService.overlayCloseCalled$
       .pipe(untilDestroyed(this))
@@ -45,6 +47,19 @@ export class CategoriesComponent implements OnInit {
       .subscribe(() => {
         this.updateValues();
       });
+
+    this.communicationService.openSnackbarCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe((message: string) => {
+        this.openSnackBar(message);
+      });
+  }
+
+  public openSnackBar(message: string): void {
+    this._snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+    });
   }
 
   public closeOverlay(): void {

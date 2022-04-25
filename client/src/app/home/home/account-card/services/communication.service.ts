@@ -11,6 +11,7 @@ export class CommunicationService {
   private updateValuesCallSource = new Subject<void>();
   private openEditTransactionOverlaySource = new Subject<void>();
   private openEditAccountOverlaySource = new Subject<Account>();
+  private openSnackbarCallSource = new Subject<string>();
 
   public componentMethodCalled$ = this.componentMethodCallSource.asObservable();
   public overlayCloseCalled$ = this.overlayCloseCallSource.asObservable();
@@ -19,6 +20,11 @@ export class CommunicationService {
     this.openEditTransactionOverlaySource.asObservable();
   public openEditAccountOverlay$ =
     this.openEditAccountOverlaySource.asObservable();
+  public openSnackbarCalled$ = this.openSnackbarCallSource.asObservable();
+
+  public callOpenSnackbar(message: string): void {
+    this.openSnackbarCallSource.next(message);
+  }
 
   public callOpenEditAccountOverlay(account: Account): void {
     this.openEditAccountOverlaySource.next(account);

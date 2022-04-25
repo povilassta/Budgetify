@@ -28,9 +28,14 @@ export class CategoryService {
     return this.http.post(this.BASE_URL, data);
   }
 
-  public updateCategory(name: string, categoryId: string): Observable<any> {
+  public updateCategory(
+    name: string,
+    categoryId: string,
+    type: string
+  ): Observable<any> {
     return this.http.patch(`${this.BASE_URL}${categoryId}`, {
       name,
+      type,
     });
   }
 

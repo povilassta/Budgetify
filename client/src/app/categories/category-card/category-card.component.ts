@@ -35,12 +35,24 @@ export class CategoryCardComponent implements OnInit {
   }
 
   public updateCategory(): void {
-    this.isEditingMode = false;
     this.categoryService
-      .updateCategory(this.categoryName, this.category._id)
+      .updateCategory(this.categoryName, this.category._id, this.category.type)
       .pipe(untilDestroyed(this))
-      .subscribe((data: any) => {
-        this.communicationService.callUpdateValues();
+      .subscribe({
+        next: () => {
+          this.communicationService.callOpenSnackbar(
+            `Category updated successfully`
+          );
+          this.communicationService.callUpdateValues();
+          this.isEditingMode = false;
+        },
+        error: (err: any) => {
+          if (err.status === 400) {
+            this.communicationService.callOpenSnackbar(
+              `Category with that name and type already exists`
+            );
+          }
+        },
       });
   }
 }
