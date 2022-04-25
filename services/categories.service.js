@@ -38,9 +38,6 @@ const CategoryService = {
 
   insert: async (data, userId) => {
     try {
-      console.log(
-        await CategoryService.getByNameType(data.name, data.type, userId)
-      );
       if (await CategoryService.getByNameType(data.name, data.type, userId)) {
         throw new BadRequestError("Category already exists");
       } else {
