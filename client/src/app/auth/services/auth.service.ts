@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { delay, Observable, of, Subscription, tap } from 'rxjs';
 import * as moment from 'moment';
 import { LoginType } from '../interfaces/logintype.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private BASE_URL: string = 'http://localhost:3000/login/';
-  constructor(private http: HttpClient) {}
+  private token$ = new Subscription();
+  constructor(private http: HttpClient, private router: Router) {}
 
   public login(email: string, password: string): Observable<any> {
     return this.http
@@ -38,5 +40,20 @@ export class AuthService {
     localStorage.setItem('token', res.token);
     localStorage.setItem('expiresAt', JSON.stringify(expiresAt.valueOf()));
     localStorage.setItem('name', res.name);
+
+    this.expirationCounter();
+  }
+
+  private expirationCounter(): void {
+    const timeout = new Date();
+    timeout.setHours(timeout.getHours() + 1);
+    this.token$.unsubscribe();
+    this.token$ = of(null)
+      .pipe(delay(timeout))
+      .subscribe(() => {
+        console.log('Token expired');
+        this.logout();
+        this.router.navigateByUrl('/login');
+      });
   }
 }
