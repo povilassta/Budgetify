@@ -15,6 +15,7 @@ import { AddTransactionComponent } from './add-transaction/add-transaction.compo
 import { TransactionViewComponent } from './transaction-view/transaction-view.component';
 import { AddAccountComponent } from './add-account/add-account.component';
 import { switchMap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -44,7 +45,8 @@ export class HomeComponent implements OnInit {
     public transactionService: TransactionService,
     private communicationService: CommunicationService,
     private overlay: Overlay,
-    private positionBuilder: OverlayPositionBuilder
+    private positionBuilder: OverlayPositionBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.communicationService.componentMethodCalled$
       .pipe(untilDestroyed(this))
@@ -78,6 +80,12 @@ export class HomeComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((account) => {
         this.createAccountEditOverlay(account);
+      });
+
+    this.communicationService.openSnackbarCalled$
+      .pipe(untilDestroyed(this))
+      .subscribe((message: string) => {
+        this.openSnackBar(message);
       });
   }
 
@@ -123,6 +131,13 @@ export class HomeComponent implements OnInit {
       .backdropClick()
       .pipe(untilDestroyed(this))
       .subscribe(() => this.overlayRef.detach());
+  }
+
+  public openSnackBar(message: string): void {
+    this._snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+    });
   }
 
   public closeOverlay(): void {

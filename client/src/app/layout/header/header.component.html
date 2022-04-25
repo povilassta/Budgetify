@@ -10,10 +10,7 @@
   <ng-container *ngIf="isWideScreen$ | async">
     <div class="navbar__links">
       <a (click)="navigateToCategories()">Categories</a>
-      <a>Subscriptions</a>
-      <a>Obligatory</a>
       <a (click)="navigateToStatistics()">Statistic</a>
-      <a>Admin</a>
     </div>
   </ng-container>
   <div class="navbar__user" mat-button [matMenuTriggerFor]="menu">

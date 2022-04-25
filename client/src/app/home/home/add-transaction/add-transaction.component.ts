@@ -131,7 +131,10 @@ export class AddTransactionComponent implements OnInit {
           description,
           type,
         })
-        .subscribe((data: any) => {
+        .subscribe(() => {
+          this.communicationService.callOpenSnackbar(
+            'Transaction updated successfully'
+          );
           this.updateValues();
           this.closeOverlay();
         });
@@ -146,7 +149,10 @@ export class AddTransactionComponent implements OnInit {
           description,
           type,
         })
-        .subscribe((data: any) => {
+        .subscribe(() => {
+          this.communicationService.callOpenSnackbar(
+            'Transaction added successfully'
+          );
           this.updateValues();
           this.closeOverlay();
         });

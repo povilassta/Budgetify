@@ -72,6 +72,9 @@ export class AddAccountComponent implements OnInit {
           description,
         })
         .subscribe((data: any) => {
+          this.communicationService.callOpenSnackbar(
+            'Account updated successfully'
+          );
           this.callUpdateValues();
           this.callCloseOverlay();
         });
@@ -79,6 +82,9 @@ export class AddAccountComponent implements OnInit {
       this.accountService
         .postAccount({ title, currency: currency._id, description })
         .subscribe((data: any) => {
+          this.communicationService.callOpenSnackbar(
+            'Account created successfully'
+          );
           this.callUpdateValues();
           this.callCloseOverlay();
         });

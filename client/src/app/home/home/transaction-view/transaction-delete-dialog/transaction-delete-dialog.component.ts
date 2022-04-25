@@ -29,11 +29,12 @@ export class TransactionDeleteDialogComponent implements OnInit {
   }
 
   public deleteTransaction(): void {
-    this.transactionService
-      .deleteTransaction(this.data._id)
-      .subscribe((data: any) => {
-        this.callUpdateValues();
-        this.callCloseOverlay();
-      });
+    this.transactionService.deleteTransaction(this.data._id).subscribe(() => {
+      this.communicationService.callOpenSnackbar(
+        'Transaction deleted successfully'
+      );
+      this.callUpdateValues();
+      this.callCloseOverlay();
+    });
   }
 }

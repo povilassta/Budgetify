@@ -28,7 +28,10 @@ export class AccountDeleteDialogComponent implements OnInit {
   }
 
   public deleteAccount(): void {
-    this.accountService.deleteAccount(this.data._id).subscribe((data: any) => {
+    this.accountService.deleteAccount(this.data._id).subscribe(() => {
+      this.communicationService.callOpenSnackbar(
+        'Account deleted successfully'
+      );
       this.callUpdateValues();
       this.callCloseOverlay();
     });
