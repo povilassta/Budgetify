@@ -39,11 +39,16 @@ export class AddCategoryComponent implements OnInit {
     this.communicationService.callUpdateValues();
   }
 
+  public openSnackbar(message: string): void {
+    this.communicationService.callOpenSnackbar(message);
+  }
+
   public onSubmit(): void {
     const { name } = this.categoryForm.value;
     const type = this.isExpense ? 'expense' : 'income';
     this.categoryService.insertCategory({ name, type }).subscribe({
       next: () => {
+        this.openSnackbar('Category added successfully');
         this.updateValues();
         this.closeOverlay();
       },
