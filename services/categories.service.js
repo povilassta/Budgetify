@@ -75,6 +75,9 @@ const CategoryService = {
     try {
       const category = await Category.findOne({ _id: categoryId, userId });
       if (category) {
+        console.log(
+          (await TransactionsService.getForAllAccounts(categoryId)).length
+        );
         if ((await TransactionsService.getForAllAccounts(categoryId)).length) {
           throw new ConflictError("Category still has transactions");
         } else {

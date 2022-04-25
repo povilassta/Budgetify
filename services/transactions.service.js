@@ -41,7 +41,7 @@ const transactionsService = {
 
   getForAllAccounts: async (categoryId) => {
     try {
-      const transactions = await Transaction.find({ category: categoryId });
+      const transactions = await Transaction.find({ categories: categoryId });
       return transactions;
     } catch (errors) {
       throw errors;

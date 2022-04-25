@@ -34,6 +34,10 @@ export class CategoryService {
     });
   }
 
+  public deleteCategory(categoryId: string): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}${categoryId}`);
+  }
+
   private filterHelper(type: string): Category[] {
     type === 'income'
       ? (this.isExpenseFilter = false)

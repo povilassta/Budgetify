@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CommunicationService } from 'src/app/home/home/account-card/services/communication.service';
 import { CategoryService } from 'src/app/home/home/add-transaction/services/category.service';
 import { Category } from 'src/app/models/category.model';
+import { CategoryDeleteDialogComponent } from './category-delete-dialog/category-delete-dialog.component';
 
 @UntilDestroy()
 @Component({
@@ -18,11 +20,18 @@ export class CategoryCardComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private communicationService: CommunicationService
+    private communicationService: CommunicationService,
+    public dialog: MatDialog
   ) {}
 
   public ngOnInit(): void {
     this.categoryName = this.category.name;
+  }
+
+  public openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(CategoryDeleteDialogComponent, {
+      data: this.category,
+    });
   }
 
   public updateCategory(): void {
