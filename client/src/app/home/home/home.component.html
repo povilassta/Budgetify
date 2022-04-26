@@ -31,6 +31,12 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
+      <div class="main__transactions__sort">
+        <button mat-icon-button (click)="clickSort()">
+          <mat-icon>sort</mat-icon>
+          <span class="main__transactions__sort__text"> Transaction date</span>
+        </button>
+      </div>
 
       <p
         *ngIf="transactionService.transactions.length === 0"

@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   public value: string = '';
   private overlayRef!: OverlayRef;
   private currentTransaction!: Transaction;
+  private decendingOrder: boolean = true;
 
   public trackBy(index: number, item: Account | Transaction): string {
     return item._id;
@@ -184,8 +185,33 @@ export class HomeComponent implements OnInit {
       )
       .pipe(untilDestroyed(this))
       .subscribe((transactions) => {
-        this.filteredTransactions = transactions;
+        this.filteredTransactions = this.sortTransactions(transactions);
       });
+  }
+
+  public clickSort(): void {
+    this.decendingOrder = !this.decendingOrder;
+    this.filteredTransactions = this.sortTransactions(
+      this.filteredTransactions
+    );
+  }
+
+  private sortTransactions(transactions: Transaction[]): Transaction[] {
+    if (!this.decendingOrder) {
+      return transactions.sort((a, b) => {
+        return (
+          new Date(a.transactionDate).valueOf() -
+          new Date(b.transactionDate).valueOf()
+        );
+      });
+    } else {
+      return transactions.sort((a, b) => {
+        return (
+          new Date(b.transactionDate).valueOf() -
+          new Date(a.transactionDate).valueOf()
+        );
+      });
+    }
   }
 
   public ngOnInit(): void {
@@ -199,7 +225,9 @@ export class HomeComponent implements OnInit {
       )
       .pipe(untilDestroyed(this))
       .subscribe((transactions) => {
-        this.filteredTransactions = transactions;
+        console.log(transactions);
+        this.filteredTransactions = this.sortTransactions(transactions);
+        console.log(this.filteredTransactions);
       });
   }
 }
