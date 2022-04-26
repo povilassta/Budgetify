@@ -225,9 +225,7 @@ export class HomeComponent implements OnInit {
       )
       .pipe(untilDestroyed(this))
       .subscribe((transactions) => {
-        console.log(transactions);
         this.filteredTransactions = this.sortTransactions(transactions);
-        console.log(this.filteredTransactions);
       });
   }
 }

@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class AuthFormComponent {
   public hide: boolean = true;
   public loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
   public areInvalidCreds: boolean = false;
