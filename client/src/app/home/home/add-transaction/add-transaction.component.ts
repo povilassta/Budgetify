@@ -1,12 +1,9 @@
 import { trigger, transition, style, animate } from '@angular/animations';
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Category } from 'src/app/models/category.model';
 import { Transaction } from 'src/app/models/transaction.model';
-import { AccountService } from '../account-card/services/accounts.service';
 import { CommunicationService } from '../account-card/services/communication.service';
 import { TransactionService } from '../transaction-card/services/transaction.service';
 import { CategoryService } from './services/category.service';
@@ -40,6 +37,7 @@ export class AddTransactionComponent implements OnInit {
     payee: new FormControl(''),
     description: new FormControl(''),
   });
+  public maxDate = new Date();
   public categories!: Category[];
   public isExpense: boolean = true;
   public transaction!: Transaction;
@@ -80,9 +78,7 @@ export class AddTransactionComponent implements OnInit {
       transactionDate: new Date(
         this.transaction?.transactionDate ||
           new Date().toISOString().substring(0, 10)
-      )
-        .toISOString()
-        .substring(0, 10),
+      ).toISOString(),
       payee: this.transaction?.payee,
       description: this.transaction?.description,
     });

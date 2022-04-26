@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CommunicationService } from 'src/app/home/home/account-card/services/communication.service';
 import { CategoryService } from 'src/app/home/home/add-transaction/services/category.service';
@@ -32,6 +31,11 @@ export class CategoryCardComponent implements OnInit {
     const dialogRef = this.dialog.open(CategoryDeleteDialogComponent, {
       data: this.category,
     });
+  }
+
+  public exitEditing(): void {
+    this.isEditingMode = false;
+    this.categoryName = this.category.name;
   }
 
   public updateCategory(): void {
